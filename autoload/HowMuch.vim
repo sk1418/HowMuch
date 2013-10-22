@@ -51,7 +51,7 @@ endfunction
 " useful for vim engine to get the
 " right scale
 "============================
-function! ToFloat(expr)
+function! HowMuch#ToFloat(expr)
 	return  substitute(a:expr,'[^.0-9]\zs\d\+\ze[^.0-9]', '&.0', 'g')
 endfunction
 
@@ -59,7 +59,7 @@ endfunction
 "============================
 " get visual selected text
 "============================
-function! GetVisualText()
+function! HowMuch#getVisualText()
 	try
 		let v_save = @v
 		normal! gv"vy
@@ -87,14 +87,14 @@ function! HowMuch(isAppend, withEq, sum, engineType)
 		echoerr v:exception
 		return
 	endtry
-	let s = GetVisualText()
+	let s = HowMuch#getVisualText()
 	let exps = split(s,'\n')
 	for i in range(len(exps))
 		try
 			"remove ending equals if there are
 			let exps[i] = substitute(exps[i],"[\t =]*$",'','g')
 			"using a tmp value to store modified expression (to float)
-			let e = ToFloat(exps[i])
+			let e = HowMuch#ToFloat(exps[i])
 			"let exps[i] = exps[i] . (a:withEq?' = ':' ' ) . HowMuch#calcInVim(e)
 
 			if a:isAppend
