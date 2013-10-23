@@ -77,7 +77,7 @@ endfunction
 "//////////////////////////////////////////////////////////////////////
 "============================
 " main funciton
-" TODO argument description
+" TODO argument description[doc]
 "============================
 function! HowMuch#HowMuch(isAppend, withEq, sum, engineType)
   "if do sum in wrong mode, reject
@@ -89,9 +89,7 @@ function! HowMuch#HowMuch(isAppend, withEq, sum, engineType)
   let has_err      = 0
   let total        = 0
   "max_len is the length of longest line
-  "exp_len_list is a list with numbers, which are the length of each line
-  "let exp_len_list = []
-  let max_len = 0
+  let max_len      = 0
 	"first do validation
 	try
 		call HowMuch#check_user_engines()
@@ -105,6 +103,7 @@ function! HowMuch#HowMuch(isAppend, withEq, sum, engineType)
   "remove ending equals if there are
   call map(exps, 'substitute(v:val,"[\\\\t =]*$","","")')
   
+" FIXME alignment should be done only if the visualmode is V or ctrl-v
   "better alignment
   " find the max_len
 	for i in range(len(exps))
@@ -116,8 +115,9 @@ function! HowMuch#HowMuch(isAppend, withEq, sum, engineType)
 	for i in range(len(exps))
 		try
 			"using a tmp value to store modified expression (to float)
-			let e = HowMuch#to_float(exps[i])
-      let result = s:engineMap[tolower(a:engineType)](e)
+			let e       = HowMuch#to_float(exps[i])
+			let result  = s:engineMap[tolower(a:engineType)](e)
+      let has_err = has_err>0? has_err : (result == 'Err'? 1:0)
       let total += result
 		catch /.*/	
       let has_err +=1
