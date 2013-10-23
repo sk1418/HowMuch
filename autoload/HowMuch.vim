@@ -8,7 +8,6 @@ let g:HowMuch_auto_engines = exists('g : HowMuch_auto_engines')? g:HowMuch_auto_
 
 let s:engineMap = { 'auto':function('HowMuch#calc_auto'), 
 					\ 'bc':function('HowMuch#calc_in_bc'),  
-					\ 'py':function('HowMuch#calc_in_py'),  
 					\ 'vim':function('HowMuch#calc_in_vim') }
 
 "//////////////////////////////////////////////////////////////////////
@@ -53,7 +52,7 @@ endfunction
 " right scale
 "============================
 function! HowMuch#to_float(expr)
-	return  substitute(a:expr,'[^.0-9]\zs\d\+\ze[^.0-9]', '&.0', 'g')
+	return  substitute(a:expr,'[^.0-9^]\zs\d\+\ze[^.0-9]', '&.0', 'g')
 endfunction
 
 
@@ -81,6 +80,18 @@ endfunction
 " TODO argument description
 "============================
 function! HowMuch#HowMuch(isAppend, withEq, sum, engineType)
+  "if do sum in wrong mode, reject
+  if a:sum && visualmode() ==# 'v'
+    echoerr HowMuch#errMsg('Sum feature is available only for line(V)/blockwise(<C-V>) visual mode')
+    return
+  endif
+  
+  let has_err      = 0
+  let total        = 0
+  "max_len is the length of longest line
+  "exp_len_list is a list with numbers, which are the length of each line
+  "let exp_len_list = []
+  let max_len = 0
 	"first do validation
 	try
 		call HowMuch#check_user_engines()
@@ -90,24 +101,47 @@ function! HowMuch#HowMuch(isAppend, withEq, sum, engineType)
 	endtry
 	let s = HowMuch#get_visual_text()
 	let exps = split(s,'\n')
+ 
+  "remove ending equals if there are
+  call map(exps, 'substitute(v:val,"[\\\\t =]*$","","")')
+  
+  "better alignment
+  " find the max_len
+	for i in range(len(exps))
+      let max_len = len(exps[i])>max_len? len(exps[i]):max_len
+  endfor
+  let exps = map(exps, "v:val . repeat(' ', max_len-len(v:val))")
+
+
 	for i in range(len(exps))
 		try
-			"remove ending equals if there are
-			let exps[i] = substitute(exps[i],"[\t =]*$",'','g')
 			"using a tmp value to store modified expression (to float)
 			let e = HowMuch#to_float(exps[i])
-			"let exps[i] = exps[i] . (a:withEq?' = ':' ' ) . HowMuch#calc_in_vim(e)
-
-			if a:isAppend
-				let exps[i] = exps[i] . (a:withEq?' = ':' ' ) .  s:engineMap[tolower(a:engineType)](e)
-			else
-				let exps[i] = s:engineMap[tolower(a:engineType)](e)
-			endif
+      let result = s:engineMap[tolower(a:engineType)](e)
+      let total += result
 		catch /.*/	
+      let has_err +=1
+      let result = 'Err'
 			echoerr  v:exception
-			return
+    finally  "at the end prepare output
+      if a:isAppend
+				let exps[i] = exps[i] . (a:withEq?' = ':' ' ) .  result
+			else
+				let exps[i] = result
+			endif
 		endtry
 	endfor
+
+  let total = has_err>0? 'Err':total
+  if a:sum
+      call add(exps,repeat('-',max_len +2 ))
+      if a:isAppend
+        call add(exps,'Sum' . repeat(' ', max_len-3). (a:withEq?' = ':' ' ) . total )
+			else
+        call add(exps,'Sum: ' .  total )
+			endif
+  endif
+ 
 	let s = join(exps, "\n")
 	let v_save = @v
 	call setreg('v',s,visualmode())
@@ -148,11 +182,11 @@ endfunction
 "============================
 function! HowMuch#calc_in_vim(expr)
   try
-    call Debug ('Expression for vim', a:expr)
+    call HowMuch#debug('Expression for vim', a:expr)
     "remove precision if the number is ending with '.00000'
     return  substitute(printf('%.'.g:HowMuch_scale . 'f', eval(a:expr)), '\.0*$', '', '') . ' '
   catch /^Vim/
-    throw HowMuch#errMsg('Invalid Vim Expression')
+    throw HowMuch#errMsg('Invalid Vim Expression:'. v:exception)
   endtry
 endfunction
 
@@ -162,8 +196,9 @@ endfunction
 "============================
 function! HowMuch#calc_in_bc(expr)
 	let r = system(printf('echo "scale=%d;%s"|bc -l', g:HowMuch_scale, a:expr))
-	call HowMuch#debug('Bc expression', a:expr)
-	if match(r, 'error')>0
+  if v:shell_error>0
+		throw HowMuch#errMsg('bc program return error: '. v:shell_error)
+  elseif match(r, 'error')>0
 		throw HowMuch#errMsg('Invalid bc Expression')
 	endif
 	"removing the ending line break
@@ -171,19 +206,9 @@ function! HowMuch#calc_in_bc(expr)
 	return r
 endfunction
 
-
-function! HowMuch#calc_in_py(expr)
-	let r = system(printf('echo "scale=%d;%s"|bc -l', g:HowMuch_scale, a:expr))
-	call HowMuch#debug('Bc expression', a:expr)
-	if match(r, 'error')>0
-		throw HowMuch#errMsg('Invalid bc Expression')
-	endif
-	"removing the ending line break
-	let r = substitute(r, '[\n\r]*$', '', '')
-	return r
-endfunction
+vnoremap <leader>? :<c-u>call HowMuch#HowMuch(1,1,1,'auto')<cr>
 
 
 
-vnoremap <leader>? :<c-u>call HowMuch#HowMuch(1,1,0,'auto')<cr>
+
 " vim: ts=2:sw=2:tw=78:fdm=marker:expandtab
