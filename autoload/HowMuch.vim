@@ -69,6 +69,7 @@ function! HowMuch#get_visual_text()
 	endtry
 endfunction 
 
+
 "///////////////////////////////////////////////////////////////////}}}
 
 
@@ -85,70 +86,73 @@ function! HowMuch#HowMuch(isAppend, withEq, sum, engineType)
     echoerr HowMuch#errMsg('Sum feature is available only for line(V)/blockwise(<C-V>) visual mode')
     return
   endif
-  
+
   let has_err      = 0
   let total        = 0
   "max_len is the length of longest line
   let max_len      = 0
-	"first do validation
-	try
-		call HowMuch#check_user_engines()
-	catch /HowMuch Error/
-		echoerr v:exception
-		return
-	endtry
-	let s = HowMuch#get_visual_text()
-	let exps = split(s,'\n')
- 
+  "first do validation
+  try
+    call HowMuch#check_user_engines()
+  catch /HowMuch Error/
+    echoerr v:exception
+    return
+  endtry
+  let s = HowMuch#get_visual_text()
+  let exps = split(s,'\n')
+
   "remove ending equals if there are
   call map(exps, 'substitute(v:val,"[\\\\t =]*$","","")')
-  
-" FIXME alignment should be done only if the visualmode is V or ctrl-v
-  "better alignment
+
+  "better alignment for V and C-V
   " find the max_len
-	for i in range(len(exps))
+  if a:isAppend && (visualmode() == 'V' || visualmode() == '')
+    for i in range(len(exps))
       let max_len = len(exps[i])>max_len? len(exps[i]):max_len
-  endfor
-  let exps = map(exps, "v:val . repeat(' ', max_len-len(v:val))")
+    endfor
+    let exps = map(exps, "v:val . repeat(' ', max_len-len(v:val))")
+  endif
 
+    for i in range(len(exps))
+      try
+        "using a tmp value to store modified expression (to float)
+        let e       = HowMuch#to_float(exps[i])
+        let result  = s:engineMap[tolower(a:engineType)](e)
+        let has_err = has_err>0? has_err : (result == 'Err'? 1:0)
+        if !has_err
+          let total += result
+        endif
+      catch /.*/	
+        let has_err +=1
+        let result = 'Err'
+        call HowMuch#debug('result', result)
+        echoerr  v:exception
+      finally  "at the end prepare output
+        if a:isAppend
+          let exps[i] = exps[i] . (a:withEq?' = ':' ' ) .  result
+        else
+          let exps[i] = result
+        endif
+      endtry
+    endfor
 
-	for i in range(len(exps))
-		try
-			"using a tmp value to store modified expression (to float)
-			let e       = HowMuch#to_float(exps[i])
-			let result  = s:engineMap[tolower(a:engineType)](e)
-      let has_err = has_err>0? has_err : (result == 'Err'? 1:0)
-      let total += result
-		catch /.*/	
-      let has_err +=1
-      let result = 'Err'
-			echoerr  v:exception
-    finally  "at the end prepare output
-      if a:isAppend
-				let exps[i] = exps[i] . (a:withEq?' = ':' ' ) .  result
-			else
-				let exps[i] = result
-			endif
-		endtry
-	endfor
-
-  let total = has_err>0? 'Err':total
-  if a:sum
+    let total = has_err>0? 'Err':total
+    if a:sum
       call add(exps,repeat('-',max_len +2 ))
       if a:isAppend
         call add(exps,'Sum' . repeat(' ', max_len-3). (a:withEq?' = ':' ' ) . total )
-			else
+      else
         call add(exps,'Sum: ' .  total )
-			endif
-  endif
- 
-	let s = join(exps, "\n")
-	let v_save = @v
-	call setreg('v',s,visualmode())
-	normal! gv"vp
-	"restore the register (v) original value
-	let @v = v_save
-endfunction
+      endif
+    endif
+
+    let s = join(exps, "\n")
+    let v_save = @v
+    call setreg('v',s,visualmode())
+    normal! gv"vp
+    "restore the register (v) original value
+    let @v = v_save
+  endfunction
 
 "============================
 " Do automatically calculation
@@ -185,8 +189,8 @@ function! HowMuch#calc_in_vim(expr)
     call HowMuch#debug('Expression for vim', a:expr)
     "remove precision if the number is ending with '.00000'
     return  substitute(printf('%.'.g:HowMuch_scale . 'f', eval(a:expr)), '\.0*$', '', '') . ' '
-  catch /^Vim/
-    throw HowMuch#errMsg('Invalid Vim Expression:'. v:exception)
+  catch /.*/
+    throw HowMuch#errMsg('Invalid Vim Expression:'. a:expr .  ' Exception:' . v:exception)
   endtry
 endfunction
 
@@ -195,10 +199,10 @@ endfunction
 "Note: echo 'abc'|bc -l will return 0
 "============================
 function! HowMuch#calc_in_bc(expr)
-	let r = system(printf('echo "scale=%d;%s"|bc -l', g:HowMuch_scale, a:expr))
+	let r = system(printf('echo "scale=%d;%s"|bc -l &2>/dev/null', g:HowMuch_scale, a:expr))
   if v:shell_error>0
 		throw HowMuch#errMsg('bc program return error: '. v:shell_error)
-  elseif match(r, 'error')>0
+  elseif match(r, 'error')>0 || r == ''
 		throw HowMuch#errMsg('Invalid bc Expression')
 	endif
 	"removing the ending line break
@@ -206,7 +210,46 @@ function! HowMuch#calc_in_bc(expr)
 	return r
 endfunction
 
-vnoremap <leader>? :<c-u>call HowMuch#HowMuch(1,1,1,'auto')<cr>
+"auto calc replace 
+vnoremap <leader>?r :<c-u>call HowMuch#HowMuch(0,0,0,'auto')<cr>
+"auto calc replace and sum
+vnoremap <leader>?rs :<c-u>call HowMuch#HowMuch(0,0,1,'auto')<cr>
+"auto calc append 
+vnoremap <leader>? :<c-u>call HowMuch#HowMuch(1,0,0,'auto')<cr>
+"auto calc append with =
+vnoremap <leader>?= :<c-u>call HowMuch#HowMuch(1,1,0,'auto')<cr>
+"auto calc append ,sum
+vnoremap <leader>?s :<c-u>call HowMuch#HowMuch(1,0,1,'auto')<cr>
+"auto calc append , =, sum
+vnoremap <leader>?=s :<c-u>call HowMuch#HowMuch(1,1,1,'auto')<cr>
+
+"bc calc replace 
+vnoremap <leader>?rbc :<c-u>call HowMuch#HowMuch(0,0,0,'bc')<cr>
+"bc calc replace and sum
+vnoremap <leader>?rsbc :<c-u>call HowMuch#HowMuch(0,0,1,'bc')<cr>
+"bc calc append 
+vnoremap <leader>?bc :<c-u>call HowMuch#HowMuch(1,0,0,'bc')<cr>
+"bc calc append with =
+vnoremap <leader>?=bc :<c-u>call HowMuch#HowMuch(1,1,0,'bc')<cr>
+"bc calc append ,sum
+vnoremap <leader>?sbc :<c-u>call HowMuch#HowMuch(1,0,1,'bc')<cr>
+"bc calc append , =, sum
+vnoremap <leader>?=sbc :<c-u>call HowMuch#HowMuch(1,1,1,'bc')<cr>
+
+
+"vim calc replace 
+vnoremap <leader>?rv :<c-u>call HowMuch#HowMuch(0,0,0,'vim')<cr>
+"vim calc replace and sum
+vnoremap <leader>?rsv :<c-u>call HowMuch#HowMuch(0,0,1,'vim')<cr>
+"vim calc append 
+vnoremap <leader>?v :<c-u>call HowMuch#HowMuch(1,0,0,'vim')<cr>
+"vim calc append with =
+vnoremap <leader>?=v :<c-u>call HowMuch#HowMuch(1,1,0,'vim')<cr>
+"vim calc append ,sum
+vnoremap <leader>?sv :<c-u>call HowMuch#HowMuch(1,0,1,'vim')<cr>
+"vim calc append , =, sum
+vnoremap <leader>?=sv :<c-u>call HowMuch#HowMuch(1,1,1,'vim')<cr>
+
 
 
 
