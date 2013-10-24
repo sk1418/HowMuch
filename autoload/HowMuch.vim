@@ -1,9 +1,9 @@
 "//////////////////////////////////////////////////////////////////////
 "                              Variables                              /
 "//////////////////////////////////////////////////////////////////////
-let g:HowMuch_debug   = 1
+"let g:HowMuch_debug   = 1
 let g:HowMuch_scale   = exists('g : HowMuch_scale')?   g:HowMuch_scale   : 2
-"let g:HowMuch_debug   = exists('g : HowMuch_debug')?   g:HowMuch_debug   : 0
+let g:HowMuch_debug   = exists('g : HowMuch_debug')?   g:HowMuch_debug   : 0
 let g:HowMuch_auto_engines = exists('g : HowMuch_auto_engines')? g:HowMuch_auto_engines : ['bc', 'vim']
 
 let s:engineMap = { 'auto':function('HowMuch#calc_auto'), 
@@ -126,7 +126,7 @@ function! HowMuch#HowMuch(isAppend, withEq, sum, engineType)
         let has_err +=1
         let result = 'Err'
         call HowMuch#debug('result', result)
-        echoerr  v:exception
+        "echoerr  v:exception
       finally  "at the end prepare output
         if a:isAppend
           let exps[i] = exps[i] . (a:withEq?' = ':' ' ) .  result
@@ -147,6 +147,7 @@ function! HowMuch#HowMuch(isAppend, withEq, sum, engineType)
     endif
 
     let s = join(exps, "\n")
+    call HowMuch#debug('last big string', s)
     let v_save = @v
     call setreg('v',s,visualmode())
     normal! gv"vp
@@ -211,44 +212,44 @@ function! HowMuch#calc_in_bc(expr)
 endfunction
 
 "auto calc replace 
-vnoremap <leader>?r :<c-u>call HowMuch#HowMuch(0,0,0,'auto')<cr>
+vnoremap <silent> <leader>?r :<c-u>call HowMuch#HowMuch(0,0,0,'auto')<cr>
 "auto calc replace and sum
-vnoremap <leader>?rs :<c-u>call HowMuch#HowMuch(0,0,1,'auto')<cr>
+vnoremap <silent> <leader>?rs :<c-u>call HowMuch#HowMuch(0,0,1,'auto')<cr>
 "auto calc append 
-vnoremap <leader>? :<c-u>call HowMuch#HowMuch(1,0,0,'auto')<cr>
+vnoremap <silent> <leader>? :<c-u>call HowMuch#HowMuch(1,0,0,'auto')<cr>
 "auto calc append with =
-vnoremap <leader>?= :<c-u>call HowMuch#HowMuch(1,1,0,'auto')<cr>
+vnoremap <silent> <leader>?= :<c-u>call HowMuch#HowMuch(1,1,0,'auto')<cr>
 "auto calc append ,sum
-vnoremap <leader>?s :<c-u>call HowMuch#HowMuch(1,0,1,'auto')<cr>
+vnoremap <silent> <leader>?s :<c-u>call HowMuch#HowMuch(1,0,1,'auto')<cr>
 "auto calc append , =, sum
-vnoremap <leader>?=s :<c-u>call HowMuch#HowMuch(1,1,1,'auto')<cr>
+vnoremap <silent> <leader>?=s :<c-u>call HowMuch#HowMuch(1,1,1,'auto')<cr>
 
 "bc calc replace 
-vnoremap <leader>?rbc :<c-u>call HowMuch#HowMuch(0,0,0,'bc')<cr>
+vnoremap <silent> <leader>b?r :<c-u>call HowMuch#HowMuch(0,0,0,'bc')<cr>
 "bc calc replace and sum
-vnoremap <leader>?rsbc :<c-u>call HowMuch#HowMuch(0,0,1,'bc')<cr>
+vnoremap <silent> <leader>b?rs :<c-u>call HowMuch#HowMuch(0,0,1,'bc')<cr>
 "bc calc append 
-vnoremap <leader>?bc :<c-u>call HowMuch#HowMuch(1,0,0,'bc')<cr>
-"bc calc append with =
-vnoremap <leader>?=bc :<c-u>call HowMuch#HowMuch(1,1,0,'bc')<cr>
+vnoremap <silent> <leader>b? :<c-u>call HowMuch#HowMuch(1,0,0,'bc')<cr>
+"bc calc append withk =
+vnoremap <silent> <leader>b?= :<c-u>call HowMuch#HowMuch(1,1,0,'bc')<cr>
 "bc calc append ,sum
-vnoremap <leader>?sbc :<c-u>call HowMuch#HowMuch(1,0,1,'bc')<cr>
+vnoremap <silent> <leader>b?s :<c-u>call HowMuch#HowMuch(1,0,1,'bc')<cr>
 "bc calc append , =, sum
-vnoremap <leader>?=sbc :<c-u>call HowMuch#HowMuch(1,1,1,'bc')<cr>
+vnoremap <silent> <leader>b?=s :<c-u>call HowMuch#HowMuch(1,1,1,'bc')<cr>
 
 
 "vim calc replace 
-vnoremap <leader>?rv :<c-u>call HowMuch#HowMuch(0,0,0,'vim')<cr>
+vnoremap <silent> <leader>v?r :<c-u>call HowMuch#HowMuch(0,0,0,'vim')<cr>
 "vim calc replace and sum
-vnoremap <leader>?rsv :<c-u>call HowMuch#HowMuch(0,0,1,'vim')<cr>
+vnoremap <silent> <leader>v?rs :<c-u>call HowMuch#HowMuch(0,0,1,'vim')<cr>
 "vim calc append 
-vnoremap <leader>?v :<c-u>call HowMuch#HowMuch(1,0,0,'vim')<cr>
+vnoremap <silent> <leader>v? :<c-u>call HowMuch#HowMuch(1,0,0,'vim')<cr>
 "vim calc append with =
-vnoremap <leader>?=v :<c-u>call HowMuch#HowMuch(1,1,0,'vim')<cr>
+vnoremap <silent> <leader>v?= :<c-u>call HowMuch#HowMuch(1,1,0,'vim')<cr>
 "vim calc append ,sum
-vnoremap <leader>?sv :<c-u>call HowMuch#HowMuch(1,0,1,'vim')<cr>
+vnoremap <silent> <leader>v?s :<c-u>call HowMuch#HowMuch(1,0,1,'vim')<cr>
 "vim calc append , =, sum
-vnoremap <leader>?=sv :<c-u>call HowMuch#HowMuch(1,1,1,'vim')<cr>
+vnoremap <silent> <leader>v?=s :<c-u>call HowMuch#HowMuch(1,1,1,'vim')<cr>
 
 
 
