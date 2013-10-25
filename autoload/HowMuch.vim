@@ -122,7 +122,7 @@ function! HowMuch#HowMuch(isAppend, withEq, sum, engineType) range
         let result  = s:engineMap[tolower(a:engineType)](e)
         let has_err = has_err>0? has_err : (result == 'Err'? 1:0)
         if !has_err
-          let total += result
+          let total += str2float(result)
         endif
       catch /.*/	
         let has_err +=1
@@ -142,14 +142,14 @@ function! HowMuch#HowMuch(isAppend, withEq, sum, engineType) range
     if a:sum
       call add(exps,repeat('-',max_len +2 ))
       if a:isAppend
-        call add(exps,'Sum' . repeat(' ', max_len-3). (a:withEq?' = ':' ' ) . total )
+        call add(exps,'Sum' . repeat(' ', max_len-3). (a:withEq?' = ':' ' ) . string(total) )
       else
-        call add(exps,'Sum: ' .  total )
+        call add(exps,'Sum: ' .  string(total) )
       endif
     endif
 
     let s = join(exps, "\n")
-    call HowMuch#debug('last big string', s)
+    call HowMuch#debug('last big expr string', s)
     let v_save = @v
     call setreg('v',s,visualmode())
     "add two empty lines if sum is true
@@ -199,7 +199,7 @@ function! HowMuch#calc_in_vim(expr)
     let r = substitute(printf('%.'. g:HowMuch_scale . 'f', eval(a:expr)), '\.0*$', '', '') . ' '
     call HowMuch#debug('vim Result', r )
     "remove precision if the number is ending with '.00000'
-    return r 
+    return r
   catch /.*/
     throw HowMuch#errMsg('Invalid Vim Expression:'. a:expr .  ' Exception:' . v:exception)
   endtry
