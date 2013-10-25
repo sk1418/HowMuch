@@ -171,23 +171,23 @@ function! HowMuch#HowMuch(isAppend, withEq, sum, engineType) range
 " HowMuch#calc_auto doesn't throw any exception
 " =============================
 function! HowMuch#calc_auto(expr)
-	let errCount = 0
-	let r = ''
-	for e in g:HowMuch_auto_engines
-		try
-			call HowMuch#debug('Auto expr', a:expr)
-			let r = s:engineMap[tolower(e)](a:expr)
-			call HowMuch#debug('Auto result', r)
-			return r
-		catch /.*/
-			let errCount += 1
-			call HowMuch#debug("Auto Exception",v:exception)
-			"return Err without stopping further calculation
-			if errCount == len(g:HowMuch_auto_engines)
-				return "Err"
-			endif
-		endtry
-	endfor
+  let errCount = 0
+  let r = ''
+  for e in g:HowMuch_auto_engines
+    try
+      call HowMuch#debug('Auto expr', a:expr)
+      let r = s:engineMap[tolower(e)](a:expr)
+      call HowMuch#debug('Auto result', r)
+      return r
+    catch /.*/
+      let errCount += 1
+      call HowMuch#debug("Auto Exception",v:exception)
+      "return Err without stopping further calculation
+      if errCount == len(g:HowMuch_auto_engines)
+        return "Err"
+      endif
+    endtry
+  endfor
 endfunction
 
 "============================
@@ -210,15 +210,15 @@ endfunction
 "Note: echo 'abc'|bc -l will return 0
 "============================
 function! HowMuch#calc_in_bc(expr)
-	let r = system(printf('echo "scale=%d;%s"|bc -l &2>/dev/null', g:HowMuch_scale, a:expr))
+  let r = system(printf('echo "scale=%d;%s"|bc -l &2>/dev/null', g:HowMuch_scale, a:expr))
   if v:shell_error>0
-		throw HowMuch#errMsg('bc program return error: '. v:shell_error)
+    throw HowMuch#errMsg('bc program return error: '. v:shell_error)
   elseif match(r, 'error')>0 || r == ''
-		throw HowMuch#errMsg('Invalid bc Expression')
-	endif
-	"removing the ending line break
-	let r = substitute(r, '[\n\r]*$', '', '')
-	return r
+    throw HowMuch#errMsg('Invalid bc Expression')
+  endif
+  "removing the ending line break
+  let r = substitute(r, '[\n\r]*$', '', '')
+  return r
 endfunction
 
 
