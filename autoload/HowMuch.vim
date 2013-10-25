@@ -18,16 +18,16 @@ let s:engineMap = { 'auto':function('HowMuch#calc_auto'),
 " print debug information
 "============================
 function! HowMuch#debug(prompt, msg)
-	if g:HowMuch_debug
-		echom printf( '[HowMuch Debug] %s :%s[$]', a:prompt, a:msg)
-	endif
+  if g:HowMuch_debug
+    echom printf( '[HowMuch Debug] %s :%s[$]', a:prompt, a:msg)
+  endif
 endfunction
 
 "============================
 " build HowMuch error message
 "============================
 function! HowMuch#errMsg(msg)
-	return printf( '[HowMuch Error] %s',  a:msg)
+  return printf( '[HowMuch Error] %s',  a:msg)
 endfunction
 
 
@@ -36,13 +36,13 @@ endfunction
 "============================
 function! HowMuch#check_user_engines()
   if len(g:HowMuch_auto_engines)==0
-			throw HowMuch#errMsg('Empty g:HowMuch_auto_engines is not allowed.')
+    throw HowMuch#errMsg('Empty g:HowMuch_auto_engines is not allowed.')
   endif
-	for k in g:HowMuch_auto_engines
-		if !exists('s:engineMap[tolower(k)]') || tolower(k) =="auto"
-			throw HowMuch#errMsg('Unsupported engine:'.k)
-		endif
-	endfor
+  for k in g:HowMuch_auto_engines
+    if !exists('s:engineMap[tolower(k)]') || tolower(k) =="auto"
+      throw HowMuch#errMsg('Unsupported engine:'.k)
+    endif
+  endfor
 endfunction
 
 
@@ -52,7 +52,7 @@ endfunction
 " right scale
 "============================
 function! HowMuch#to_float(expr)
-	return  substitute(a:expr,'[^.0-9^]\zs\d\+\ze\([^.0-9]\|$\)', '&.0', 'g')
+  return  substitute(a:expr,'[^.0-9^]\zs\d\+\ze\([^.0-9]\|$\)', '&.0', 'g')
 endfunction
 
 
@@ -60,13 +60,13 @@ endfunction
 " get visual selected text
 "============================
 function! HowMuch#get_visual_text()
-	try
-		let v_save = @v
-		normal! gv"vy
-		return @v
-	finally
-		let @v = v_save
-	endtry
+  try
+    let v_save = @v
+    normal! gv"vy
+    return @v
+  finally
+    let @v = v_save
+  endtry
 endfunction 
 
 
@@ -114,54 +114,54 @@ function! HowMuch#HowMuch(isAppend, withEq, sum, engineType) range
     let exps = map(exps, "v:val . repeat(' ', max_len-len(v:val))")
   endif
 
-    for i in range(len(exps))
-      try
-        "using a tmp value to store modified expression (to float)
-        let e       = HowMuch#to_float(exps[i])
-        call HowMuch#debug("after to_float:", e)
-        let result  = s:engineMap[tolower(a:engineType)](e)
-        let has_err = has_err>0? has_err : (result == 'Err'? 1:0)
-        if !has_err
-          let total += str2float(result)
-        endif
-      catch /.*/	
-        let has_err +=1
-        let result = 'Err'
-        call HowMuch#debug('result', result)
-        "echoerr  v:exception
-      finally  "at the end prepare output
-        if a:isAppend
-          let exps[i] = exps[i] . (a:withEq?' = ':' ' ) .  result
-        else
-          let exps[i] = result
-        endif
-      endtry
-    endfor
-
-    let total = has_err>0? 'Err':total
-    if a:sum
-      call add(exps,repeat('-',max_len +2 ))
-      if a:isAppend
-        call add(exps,'Sum' . repeat(' ', max_len-3). (a:withEq?' = ':' ' ) . string(total) )
-      else
-        call add(exps,'Sum: ' .  string(total) )
+  for i in range(len(exps))
+    try
+      "using a tmp value to store modified expression (to float)
+      let e       = HowMuch#to_float(exps[i])
+      call HowMuch#debug("after to_float:", e)
+      let result  = s:engineMap[tolower(a:engineType)](e)
+      let has_err = has_err>0? has_err : (result == 'Err'? 1:0)
+      if !has_err
+        let total += str2float(result)
       endif
-    endif
+    catch /.*/	
+      let has_err +=1
+      let result = 'Err'
+      call HowMuch#debug('result', result)
+      "echoerr  v:exception
+    finally  "at the end prepare output
+      if a:isAppend
+        let exps[i] = exps[i] . (a:withEq?' = ':' ' ) .  result
+      else
+        let exps[i] = result
+      endif
+    endtry
+  endfor
 
-    let s = join(exps, "\n")
-    call HowMuch#debug('last big expr string', s)
-    let v_save = @v
-    call setreg('v',s,visualmode())
-    "add two empty lines if sum is true
-    if a:sum
-      exec a:lastline.'pu _'
-      exec a:lastline.'pu _'
+  let total = has_err>0? 'Err':total
+  if a:sum
+    call add(exps,repeat('-',max_len +2 ))
+    if a:isAppend
+      call add(exps,'Sum' . repeat(' ', max_len-3). (a:withEq?' = ':' ' ) . string(total) )
+    else
+      call add(exps,'Sum: ' .  string(total) )
     endif
+  endif
 
-    normal! gv"vp
-    "restore the register (v) original value
-    let @v = v_save
-  endfunction
+  let s = join(exps, "\n")
+  call HowMuch#debug('last big expr string', s)
+  let v_save = @v
+  call setreg('v',s,visualmode())
+  "add two empty lines if sum is true
+  if a:sum
+    exec a:lastline.'pu _'
+    exec a:lastline.'pu _'
+  endif
+
+  normal! gv"vp
+  "restore the register (v) original value
+  let @v = v_save
+endfunction
 
 "============================
 " Do automatically calculation
