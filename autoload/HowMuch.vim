@@ -118,6 +118,7 @@ function! HowMuch#HowMuch(isAppend, withEq, sum, engineType) range
       try
         "using a tmp value to store modified expression (to float)
         let e       = HowMuch#to_float(exps[i])
+        call HowMuch#debug("after to_float:", e)
         let result  = s:engineMap[tolower(a:engineType)](e)
         let has_err = has_err>0? has_err : (result == 'Err'? 1:0)
         if !has_err
@@ -195,8 +196,10 @@ endfunction
 function! HowMuch#calc_in_vim(expr)
   try
     call HowMuch#debug('Expression for vim', a:expr)
+    let r = substitute(printf('%.'. g:HowMuch_scale . 'f', eval(a:expr)), '\.0*$', '', '') . ' '
+    call HowMuch#debug('vim Result', r )
     "remove precision if the number is ending with '.00000'
-    return  substitute(printf('%.'.g:HowMuch_scale . 'f', eval(a:expr)), '\.0*$', '', '') . ' '
+    return  
   catch /.*/
     throw HowMuch#errMsg('Invalid Vim Expression:'. a:expr .  ' Exception:' . v:exception)
   endtry
