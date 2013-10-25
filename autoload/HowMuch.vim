@@ -1,10 +1,10 @@
 "//////////////////////////////////////////////////////////////////////
 "                              Variables                              /
 "//////////////////////////////////////////////////////////////////////
-"let g:HowMuch_debug   = 1
-let g:HowMuch_scale   = exists('g : HowMuch_scale')?   g:HowMuch_scale   : 2
-let g:HowMuch_debug   = exists('g : HowMuch_debug')?   g:HowMuch_debug   : 0
-let g:HowMuch_auto_engines = exists('g : HowMuch_auto_engines')? g:HowMuch_auto_engines : ['bc', 'vim']
+let g:HowMuch_debug   = 1
+let g:HowMuch_scale   = exists('g:HowMuch_scale')?   g:HowMuch_scale   : 2
+let g:HowMuch_debug   = exists('g:HowMuch_debug')?   g:HowMuch_debug   : 0
+let g:HowMuch_auto_engines = exists('g:HowMuch_auto_engines')? g:HowMuch_auto_engines : ['bc', 'vim']
 
 let s:engineMap = { 'auto':function('HowMuch#calc_auto'), 
 					\ 'bc':function('HowMuch#calc_in_bc'),  
@@ -80,7 +80,8 @@ endfunction
 " main funciton
 " TODO argument description[doc]
 "============================
-function! HowMuch#HowMuch(isAppend, withEq, sum, engineType)
+function! HowMuch#HowMuch(isAppend, withEq, sum, engineType) range
+
   "if do sum in wrong mode, reject
   if a:sum && visualmode() ==# 'v'
     echoerr HowMuch#errMsg('Sum feature is available only for line(V)/blockwise(<C-V>) visual mode')
@@ -150,6 +151,12 @@ function! HowMuch#HowMuch(isAppend, withEq, sum, engineType)
     call HowMuch#debug('last big string', s)
     let v_save = @v
     call setreg('v',s,visualmode())
+    "add two empty lines if sum is true
+    if a:sum
+      exec a:lastline.'pu _'
+      exec a:lastline.'pu _'
+    endif
+
     normal! gv"vp
     "restore the register (v) original value
     let @v = v_save
@@ -211,47 +218,102 @@ function! HowMuch#calc_in_bc(expr)
 	return r
 endfunction
 
-"auto calc replace 
-vnoremap <silent> <leader>?r :<c-u>call HowMuch#HowMuch(0,0,0,'auto')<cr>
-"auto calc replace and sum
-vnoremap <silent> <leader>?rs :<c-u>call HowMuch#HowMuch(0,0,1,'auto')<cr>
-"auto calc append 
-vnoremap <silent> <leader>? :<c-u>call HowMuch#HowMuch(1,0,0,'auto')<cr>
-"auto calc append with =
-vnoremap <silent> <leader>?= :<c-u>call HowMuch#HowMuch(1,1,0,'auto')<cr>
-"auto calc append ,sum
-vnoremap <silent> <leader>?s :<c-u>call HowMuch#HowMuch(1,0,1,'auto')<cr>
-"auto calc append , =, sum
-vnoremap <silent> <leader>?=s :<c-u>call HowMuch#HowMuch(1,1,1,'auto')<cr>
-
-"bc calc replace 
-vnoremap <silent> <leader>b?r :<c-u>call HowMuch#HowMuch(0,0,0,'bc')<cr>
-"bc calc replace and sum
-vnoremap <silent> <leader>b?rs :<c-u>call HowMuch#HowMuch(0,0,1,'bc')<cr>
-"bc calc append 
-vnoremap <silent> <leader>b? :<c-u>call HowMuch#HowMuch(1,0,0,'bc')<cr>
-"bc calc append withk =
-vnoremap <silent> <leader>b?= :<c-u>call HowMuch#HowMuch(1,1,0,'bc')<cr>
-"bc calc append ,sum
-vnoremap <silent> <leader>b?s :<c-u>call HowMuch#HowMuch(1,0,1,'bc')<cr>
-"bc calc append , =, sum
-vnoremap <silent> <leader>b?=s :<c-u>call HowMuch#HowMuch(1,1,1,'bc')<cr>
 
 
-"vim calc replace 
-vnoremap <silent> <leader>v?r :<c-u>call HowMuch#HowMuch(0,0,0,'vim')<cr>
-"vim calc replace and sum
-vnoremap <silent> <leader>v?rs :<c-u>call HowMuch#HowMuch(0,0,1,'vim')<cr>
-"vim calc append 
-vnoremap <silent> <leader>v? :<c-u>call HowMuch#HowMuch(1,0,0,'vim')<cr>
-"vim calc append with =
-vnoremap <silent> <leader>v?= :<c-u>call HowMuch#HowMuch(1,1,0,'vim')<cr>
-"vim calc append ,sum
-vnoremap <silent> <leader>v?s :<c-u>call HowMuch#HowMuch(1,0,1,'vim')<cr>
-"vim calc append , =, sum
-vnoremap <silent> <leader>v?=s :<c-u>call HowMuch#HowMuch(1,1,1,'vim')<cr>
+"vnoremap <Plug>AutoCalcReplace :call HowMuch#HowMuch(0,0,0,'auto')<cr>
+"vnoremap <Plug>AutoCalcReplaceWithSum :call HowMuch#HowMuch(0,0,1,'auto')<cr>
+"vnoremap <Plug>AutoCalcAppend :call HowMuch#HowMuch(1,0,0,'auto')<cr>
+"vnoremap <Plug>AutoCalcAppendWithEq :call HowMuch#HowMuch(1,1,0,'auto')<cr>
+"vnoremap <Plug>AutoCalcAppendWithSum :call HowMuch#HowMuch(1,0,1,'auto')<cr>
+"vnoremap <Plug>AutoCalcAppendWithEqAndSum :call HowMuch#HowMuch(1,1,1,'auto')<cr>
+
+"vnoremap <Plug>BcCalcReplace :call HowMuch#HowMuch(0,0,0,'bc')<cr>
+"vnoremap <Plug>BcCalcReplaceWithSum :call HowMuch#HowMuch(0,0,1,'bc')<cr>
+"vnoremap <Plug>BcCalcAppend :call HowMuch#HowMuch(1,0,0,'bc')<cr>
+"vnoremap <Plug>BcCalcAppendWithEq :call HowMuch#HowMuch(1,1,0,'bc')<cr>
+"vnoremap <Plug>BcCalcAppendWithSum :call HowMuch#HowMuch(1,0,1,'bc')<cr>
+"vnoremap <Plug>BcCalcAppendWithEqAndSum :call HowMuch#HowMuch(1,1,1,'bc')<cr>
 
 
+"vnoremap <Plug>VimCalcReplace :call HowMuch#HowMuch(0,0,0,'vim')<cr>
+"vnoremap <Plug>VimCalcReplaceWithSum :call HowMuch#HowMuch(0,0,1,'vim')<cr>
+"vnoremap <Plug>VimCalcAppend :call HowMuch#HowMuch(1,0,0,'vim')<cr>
+"vnoremap <Plug>VimCalcAppendWithEq :call HowMuch#HowMuch(1,1,0,'vim')<cr>
+"vnoremap <Plug>VimCalcAppendWithSum :call HowMuch#HowMuch(1,0,1,'vim')<cr>
+"vnoremap <Plug>VimCalcAppendWithEqAndSum :call HowMuch#HowMuch(1,1,1,'vim')<cr>
+"nnoremap <Plug>X :ls<cr>
+"nnoremap <leader>q <Plug>X
+
+
+""if !hasmapto('<Plug>AutoCalcReplace')
+  ""vnoremap   <leader>?r <Plug>AutoCalcReplace
+""endif
+""if !hasmapto('<Plug>AutoCalcReplaceWithSum')
+  ""vnoremap   <leader>?rs <Plug>AutoCalcReplaceWithSum
+""endif
+"if !hasmapto('<Plug>AutoCalcAppend')
+  "vnoremap   <leader>? <Plug>AutoCalcAppend
+"endif
+
+""if !hasmapto('<Plug>AutoCalcAppendWithEq')
+  ""vnoremap   <leader>?= <Plug>AutoCalcAppendWithEq
+""endif
+
+""if !hasmapto('<Plug>AutoCalcAppendWithSum')
+  ""vnoremap   <leader>?s <Plug>AutoCalcAppendWithSum
+""endif
+
+""if !hasmapto('<Plug>AutoCalcAppendWithEqAndSum')
+  ""vnoremap   <leader>?=s <Plug>AutoCalcAppendWithEqAndSum
+""endif
+
+""if !hasmapto('<Plug>BcCalcReplace')
+  ""vnoremap   <leader>b?r <Plug>BcCalcReplace
+""endif
+
+""if !hasmapto('<Plug>BcCalcReplaceWithSum')
+  ""vnoremap   <leader>b?rs <Plug>BcCalcReplaceWithSum
+""endif
+
+""if !hasmapto('<Plug>BcCalcAppend')
+  ""vnoremap   <leader>b? <Plug>BcCalcAppend
+""endif
+
+""if !hasmapto('<Plug>BcCalcAppendWithEq')
+  ""vnoremap   <leader>b?= <Plug>BcCalcAppendWithEq
+""endif
+
+""if !hasmapto('<Plug>BcCalcAppendWithSum')
+  ""vnoremap   <leader>b?s <Plug>BcCalcAppendWithSum
+""endif
+
+""if !hasmapto('<Plug>BcCalcAppendWithEqAndSum')
+  ""vnoremap   <leader>b?=s <Plug>BcCalcAppendWithEqAndSum
+""endif
+
+""if !hasmapto('<Plug>VimCalcReplace')
+  ""vnoremap   <leader>v?r <Plug>VimCalcReplace
+""endif
+
+""if !hasmapto('<Plug>VimCalcReplaceWithSum')
+  ""vnoremap   <leader>v?rs <Plug>VimCalcReplaceWithSum
+""endif
+
+""if !hasmapto('<Plug>VimCalcAppend')
+  ""vnoremap   <leader>v? <Plug>VimCalcAppend
+""endif
+
+""if !hasmapto('<Plug>VimCalcAppendWithEq')
+  ""vnoremap   <leader>v?= <Plug>VimCalcAppendWithEq
+""endif
+
+""if !hasmapto('<Plug>VimCalcAppendWithSum')
+  ""vnoremap   <leader>v?s <Plug>VimCalcAppendWithSum
+""endif
+
+""if !hasmapto('<Plug>VimCalcAppendWithEqAndSum')
+  ""vnoremap   <leader>v?=s <Plug>VimCalcAppendWithEqAndSum
+""endif
 
 
 
