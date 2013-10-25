@@ -52,7 +52,7 @@ endfunction
 " right scale
 "============================
 function! HowMuch#to_float(expr)
-	return  substitute(a:expr,'[^.0-9^]\zs\d\+\ze[^.0-9]', '&.0', 'g')
+	return  substitute(a:expr,'[^.0-9^]\zs\d\+\ze\([^.0-9]\|$\)', '&.0', 'g')
 endfunction
 
 
@@ -199,7 +199,7 @@ function! HowMuch#calc_in_vim(expr)
     let r = substitute(printf('%.'. g:HowMuch_scale . 'f', eval(a:expr)), '\.0*$', '', '') . ' '
     call HowMuch#debug('vim Result', r )
     "remove precision if the number is ending with '.00000'
-    return  
+    return r 
   catch /.*/
     throw HowMuch#errMsg('Invalid Vim Expression:'. a:expr .  ' Exception:' . v:exception)
   endtry
