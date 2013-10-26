@@ -16,14 +16,28 @@
 
 #Features
 
-- Support
-	* Engines
-	- `HowMuch` supports `GNU bc` and `vim` expressions evaluation *"engines"*,
+- Supports all visual selection modes (char-/line-/block-wise)
+- Supports two output formats: 
+	- append result with/out `=` after the expression 
+	- replace the selected expressions with result
+- Supports sum total result in line-(`v`) and block-wise (`Ctrl-v`)selection
+- User can create custom mapping to invoke `HowMuch`
+- *Evaluation "Engines"*
+	- `HowMuch` supports `GNU bc` and `vim` expressions evaluation engines,
 	- User can choose which engine should be used to evaluate current visual section.
 	- User can define the order of the engines, and let `HowMuch` do evaluation automatically. E.g. if `bc` fails, try `vim` again.
 
-#Demos
+#Examples & Screencasts
+Examples and screencasts would be the best way to explain how does `HowMuch` does it job. For detailed usage explanation, please check the plugin documentation. The **USAGE*** section in the doc will cover:
 
-#Why there is only `bc` and `Vim` expression evaluation? How about `python`, `ruby`,`javascript`....?
+- what mapping gets what output
+- set `HowMuch` varialbes
+- create custom `HowMuch` mappings
+
+screencasts TODO
+
+#About Engines
+todo(vim, bc, python?)
+
 
 
