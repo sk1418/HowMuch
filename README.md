@@ -1,5 +1,20 @@
+	
+	    __  __              __  ___           __       ___ 
+	   / / / /___ _      __/  |/  /_  _______/ /_     /__ \
+	  / /_/ / __ \ | /| / / /|_/ / / / / ___/ __ \     / _/
+	 / __  / /_/ / |/ |/ / /  / / /_/ / /__/ / / /    /_/  
+	/_/ /_/\\___/|_\/|__/_/  /\\\__,_/\___/_/ /_/    (_)  
+	
+	- calculate visual selected math expressions in vim	
+                                                     
+
 #HowMuch
 
-a Vim plugin to calculate visual selected expressions.
+#Introduction
+`HowMuch?` is a Vim plugin to calculate visual selected mathematical formulars (expressions). It does the calculation 
 
-!!! The plugin is not yet usable, because it is under heavy development.
+#Features
+
+#Demos
+
+#Why there is only `bc` and `Vim` expression evaluation? How about `python`, `ruby`,`javascript`....?

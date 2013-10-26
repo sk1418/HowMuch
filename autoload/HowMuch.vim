@@ -121,7 +121,7 @@ function! HowMuch#HowMuch(isAppend, withEq, sum, engineType) range
       call HowMuch#debug("after to_float:", e)
       let result  = s:engineMap[tolower(a:engineType)](e)
       let has_err = has_err>0? has_err : (result == 'Err'? 1:0)
-      if !has_err
+      if !has_err && a:sum
         let total += str2float(result)
       endif
     catch /.*/	
@@ -138,8 +138,8 @@ function! HowMuch#HowMuch(isAppend, withEq, sum, engineType) range
     endtry
   endfor
 
-  let total = has_err>0? 'Err':total
   if a:sum
+    let total = has_err>0? 'Err':total
     call add(exps,repeat('-',max_len +2 ))
     if a:isAppend
       call add(exps,'Sum' . repeat(' ', max_len-3). (a:withEq?' = ':' ' ) . string(total) )
