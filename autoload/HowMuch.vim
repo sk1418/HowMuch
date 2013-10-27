@@ -1,14 +1,20 @@
+if exists("g:loaded_HowMuch") 
+"FIXME skip finish only for testing and development
+  "finish
+endif
+
+let g:loaded_HowMuch = 1
+
 "//////////////////////////////////////////////////////////////////////
 "                              Variables                              /
 "//////////////////////////////////////////////////////////////////////
-let g:HowMuch_debug   = 1
 let g:HowMuch_scale   = exists('g:HowMuch_scale')?   g:HowMuch_scale   : 2
 let g:HowMuch_debug   = exists('g:HowMuch_debug')?   g:HowMuch_debug   : 0
 let g:HowMuch_auto_engines = exists('g:HowMuch_auto_engines')? g:HowMuch_auto_engines : ['bc', 'vim']
-
-let s:engineMap = { 'auto':function('HowMuch#calc_auto'), 
-					\ 'bc':function('HowMuch#calc_in_bc'),  
-					\ 'vim':function('HowMuch#calc_in_vim') }
+let g:HowMuch_engine_map = exists('g:HowMuch_engine_map')? g:HowMuch_engine_map : { 
+            \'auto':function('HowMuch#calc_auto'), 
+            \ 'bc':function('HowMuch#calc_in_bc'),  
+            \ 'vim':function('HowMuch#calc_in_vim') }
 
 "//////////////////////////////////////////////////////////////////////
 "                         Helper  functions                         {{{
@@ -39,7 +45,7 @@ function! HowMuch#check_user_engines()
     throw HowMuch#errMsg('Empty g:HowMuch_auto_engines is not allowed.')
   endif
   for k in g:HowMuch_auto_engines
-    if !exists('s:engineMap[tolower(k)]') || tolower(k) =="auto"
+    if !exists('g:HowMuch_engine_map[tolower(k)]') || tolower(k) =="auto"
       throw HowMuch#errMsg('Unsupported engine:'.k)
     endif
   endfor
@@ -77,8 +83,24 @@ endfunction
 "                          Logic   functions                          /
 "//////////////////////////////////////////////////////////////////////
 "============================
-" main funciton
-" TODO argument description[doc]
+" main funciton, do calculation on expressions. The funciton has 4 arguments:
+" isAppend: 
+"           1: the result will be appended after the expression
+"           0: the result will replace visual selected expression
+" withEq :
+"           This argument has effect only if isAppend is 1, it defines the
+"           separtor between expression and appened result.
+"           1: separator is ' = ' (space equal sign space)
+"           0: separator is a space.
+"
+" sum:    
+"           1: after the calculation of all expressions, do a SUM
+"           0: without doing sum calculation.
+"
+" engineType: 
+"           see variable g:HowMuch_engine_map, it defines that use which
+"           engine to calculate the result.  If the value is 'auto', it will try engines
+"           (also follow the order) defined in g:HowMuch_auto_engines
 "============================
 function! HowMuch#HowMuch(isAppend, withEq, sum, engineType) range
 
@@ -119,7 +141,7 @@ function! HowMuch#HowMuch(isAppend, withEq, sum, engineType) range
       "using a tmp value to store modified expression (to float)
       let e       = HowMuch#to_float(exps[i])
       call HowMuch#debug("after to_float:", e)
-      let result  = s:engineMap[tolower(a:engineType)](e)
+      let result  = g:HowMuch_engine_map[tolower(a:engineType)](e)
       let has_err = has_err>0? has_err : (result == 'Err'? 1:0)
       if !has_err && a:sum
         let total += str2float(result)
@@ -176,7 +198,7 @@ function! HowMuch#calc_auto(expr)
   for e in g:HowMuch_auto_engines
     try
       call HowMuch#debug('Auto expr', a:expr)
-      let r = s:engineMap[tolower(e)](a:expr)
+      let r = g:HowMuch_engine_map[tolower(e)](a:expr)
       call HowMuch#debug('Auto result', r)
       return r
     catch /.*/
