@@ -2,18 +2,20 @@ if exists("g:loaded_HowMuch")
 "FIXME skip finish only for testing and development
   "finish
 endif
-
 let g:loaded_HowMuch = 1
 
+let g:HowMuch_debug  =1
 "//////////////////////////////////////////////////////////////////////
 "                              Variables                              /
 "//////////////////////////////////////////////////////////////////////
 let g:HowMuch_scale   = exists('g:HowMuch_scale')?   g:HowMuch_scale   : 2
 let g:HowMuch_debug   = exists('g:HowMuch_debug')?   g:HowMuch_debug   : 0
-let g:HowMuch_auto_engines = exists('g:HowMuch_auto_engines')? g:HowMuch_auto_engines : ['bc', 'vim']
+let g:HowMuch_auto_engines = exists('g:HowMuch_auto_engines')? g:HowMuch_auto_engines : ['bc', 'vim', 'py']
+
 let g:HowMuch_engine_map = exists('g:HowMuch_engine_map')? g:HowMuch_engine_map : { 
             \'auto':function('HowMuch#calc_auto'), 
             \ 'bc':function('HowMuch#calc_in_bc'),  
+            \ 'py':function('HowMuch#calc_in_py'),  
             \ 'vim':function('HowMuch#calc_in_vim') }
 
 "//////////////////////////////////////////////////////////////////////
@@ -226,11 +228,12 @@ function! HowMuch#calc_in_vim(expr)
     throw HowMuch#errMsg('Invalid Vim Expression:'. a:expr .  ' Exception:' . v:exception)
   endtry
 endfunction
+"
 
 "============================
 "do math calculation with gnu bc -l
 "Note: echo 'abc'|bc -l will return 0
-"============================
+"============================ 
 function! HowMuch#calc_in_bc(expr)
   let r = system(printf('echo "scale=%d;%s"|bc -l &2>/dev/null', g:HowMuch_scale, a:expr))
   if v:shell_error>0
@@ -243,5 +246,43 @@ function! HowMuch#calc_in_bc(expr)
   return r
 endfunction
 
+"============================
+"do math calculation with python
+"
+"============================ 
+function! HowMuch#calc_in_py(expr)
+  if !has('python')
+    echoerr HowMuch#errMsg('vim was not compiled with +python!')
+    return 'Err'
+  endif
+  call HowMuch#debug('Expression for python', a:expr)
+  let result = ''
+python << EOF
+import vim
+import math
+
+# only math module is allowed for evaluation
+ns = vars(math).copy()
+ns['__builtins__'] = None
+expr = vim.eval("a:expr")
+scale = vim.eval("g:HowMuch_scale")
+try:
+    fmt = "{:." + str(scale) + "f}"
+    result = fmt.format(eval(expr,ns))
+except Exception as e:
+    print e
+    result = "Err"
+
+print result
+vim.command("let result = string(%s)" % str(result))
+EOF
+
+    
+  call HowMuch#debug('Result from python', result)
+  if result == 'Err'
+      throw HowMuch#errMsg('Invalid python Expression ' . a:expr)
+  endif
+  return result
+endfunction
 
 " vim: ts=2:sw=2:tw=78:fdm=marker:expandtab
