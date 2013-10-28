@@ -127,28 +127,28 @@ if !hasmapto('<Plug>VimCalcAppendWithEqAndSum','v')
   vmap  <silent><unique> <leader>v?=s <Plug>VimCalcAppendWithEqAndSum
 endif
 
-
+"py default mappings
 if !hasmapto('<Plug>PyCalcReplace','v')
-  vmap  <silent><unique> <leader>b?r <Plug>PyCalcReplace
+  vmap  <silent><unique> <leader>p?r <Plug>PyCalcReplace
 endif
 
 if !hasmapto('<Plug>PyCalcReplaceWithSum','v')
-  vmap  <silent><unique> <leader>b?rs <Plug>PyCalcReplaceWithSum
+  vmap  <silent><unique> <leader>p?rs <Plug>PyCalcReplaceWithSum
 endif
 
 if !hasmapto('<Plug>PyCalcAppend','v')
-  vmap  <silent><unique> <leader>b? <Plug>PyCalcAppend
+  vmap  <silent><unique> <leader>p? <Plug>PyCalcAppend
 endif
 
 if !hasmapto('<Plug>PyCalcAppendWithEq','v')
-  vmap  <silent><unique> <leader>b?= <Plug>PyCalcAppendWithEq
+  vmap  <silent><unique> <leader>p?= <Plug>PyCalcAppendWithEq
 endif
 
 if !hasmapto('<Plug>PyCalcAppendWithSum','v')
-  vmap  <silent><unique> <leader>b?s <Plug>PyCalcAppendWithSum
+  vmap  <silent><unique> <leader>p?s <Plug>PyCalcAppendWithSum
 endif
 
 if !hasmapto('<Plug>PyCalcAppendWithEqAndSum','v')
-  vmap  <silent><unique> <leader>b?=s <Plug>PyCalcAppendWithEqAndSum
+  vmap  <silent><unique> <leader>p?=s <Plug>PyCalcAppendWithEqAndSum
 endif
 " vim: ts=2:sw=2:tw=78:fdm=marker:expandtab
