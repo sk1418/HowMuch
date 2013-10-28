@@ -21,6 +21,7 @@
 "CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 " }}}
 
+"<Plug> mappings for auto engine
 vnoremap <silent><unique> <Plug>AutoCalcReplace            :call HowMuch#HowMuch(0,0,0,'auto')<cr>
 vnoremap <silent><unique> <Plug>AutoCalcReplaceWithSum     :call HowMuch#HowMuch(0,0,1,'auto')<cr>
 vnoremap <silent><unique> <Plug>AutoCalcAppend             :call HowMuch#HowMuch(1,0,0,'auto')<cr>
@@ -28,6 +29,7 @@ vnoremap <silent><unique> <Plug>AutoCalcAppendWithEq       :call HowMuch#HowMuch
 vnoremap <silent><unique> <Plug>AutoCalcAppendWithSum      :call HowMuch#HowMuch(1,0,1,'auto')<cr>
 vnoremap <silent><unique> <Plug>AutoCalcAppendWithEqAndSum :call HowMuch#HowMuch(1,1,1,'auto')<cr>
 
+"<Plug> mappings for bc engine
 vnoremap <silent><unique> <Plug>BcCalcReplace              :call HowMuch#HowMuch(0,0,0,'bc')<cr>
 vnoremap <silent><unique> <Plug>BcCalcReplaceWithSum       :call HowMuch#HowMuch(0,0,1,'bc')<cr>
 vnoremap <silent><unique> <Plug>BcCalcAppend               :call HowMuch#HowMuch(1,0,0,'bc')<cr>
@@ -36,12 +38,23 @@ vnoremap <silent><unique> <Plug>BcCalcAppendWithSum        :call HowMuch#HowMuch
 vnoremap <silent><unique> <Plug>BcCalcAppendWithEqAndSum   :call HowMuch#HowMuch(1,1,1,'bc')<cr>
 
 
+"<Plug> mappings for vim engine
 vnoremap <silent><unique> <Plug>VimCalcReplace             :call HowMuch#HowMuch(0,0,0,'vim')<cr>
 vnoremap <silent><unique> <Plug>VimCalcReplaceWithSum      :call HowMuch#HowMuch(0,0,1,'vim')<cr>
 vnoremap <silent><unique> <Plug>VimCalcAppend              :call HowMuch#HowMuch(1,0,0,'vim')<cr>
 vnoremap <silent><unique> <Plug>VimCalcAppendWithEq        :call HowMuch#HowMuch(1,1,0,'vim')<cr>
 vnoremap <silent><unique> <Plug>VimCalcAppendWithSum       :call HowMuch#HowMuch(1,0,1,'vim')<cr>
 vnoremap <silent><unique> <Plug>VimCalcAppendWithEqAndSum  :call HowMuch#HowMuch(1,1,1,'vim')<cr>
+
+
+"<Plug> mappings for python engine
+vnoremap <silent><unique> <Plug>PyCalcReplace              :call HowMuch#HowMuch(0,0,0,'py')<cr>
+vnoremap <silent><unique> <Plug>PyCalcReplaceWithSum       :call HowMuch#HowMuch(0,0,1,'py')<cr>
+vnoremap <silent><unique> <Plug>PyCalcAppend               :call HowMuch#HowMuch(1,0,0,'py')<cr>
+vnoremap <silent><unique> <Plug>PyCalcAppendWithEq         :call HowMuch#HowMuch(1,1,0,'py')<cr>
+vnoremap <silent><unique> <Plug>PyCalcAppendWithSum        :call HowMuch#HowMuch(1,0,1,'py')<cr>
+vnoremap <silent><unique> <Plug>PyCalcAppendWithEqAndSum   :call HowMuch#HowMuch(1,1,1,'py')<cr>
+
 
 
 if !hasmapto('<Plug>AutoCalcReplace','v')
@@ -115,4 +128,27 @@ if !hasmapto('<Plug>VimCalcAppendWithEqAndSum','v')
 endif
 
 
+if !hasmapto('<Plug>PyCalcReplace','v')
+  vmap  <silent><unique> <leader>b?r <Plug>PyCalcReplace
+endif
+
+if !hasmapto('<Plug>PyCalcReplaceWithSum','v')
+  vmap  <silent><unique> <leader>b?rs <Plug>PyCalcReplaceWithSum
+endif
+
+if !hasmapto('<Plug>PyCalcAppend','v')
+  vmap  <silent><unique> <leader>b? <Plug>PyCalcAppend
+endif
+
+if !hasmapto('<Plug>PyCalcAppendWithEq','v')
+  vmap  <silent><unique> <leader>b?= <Plug>PyCalcAppendWithEq
+endif
+
+if !hasmapto('<Plug>PyCalcAppendWithSum','v')
+  vmap  <silent><unique> <leader>b?s <Plug>PyCalcAppendWithSum
+endif
+
+if !hasmapto('<Plug>PyCalcAppendWithEqAndSum','v')
+  vmap  <silent><unique> <leader>b?=s <Plug>PyCalcAppendWithEqAndSum
+endif
 " vim: ts=2:sw=2:tw=78:fdm=marker:expandtab
