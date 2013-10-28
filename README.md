@@ -6,7 +6,8 @@
 	  / /_/ / __ \ | /| / / /|_/ / / / / ___/ __ \     / _/
 	 / __  / /_/ / |/ |/ / /  / / /_/ / /__/ / / /    /_/  
 	/_/ /_/\____/|__/|__/_/  /_/\__,_/\___/_/ /_/    (_) 
-	  - calculate visual selected math expressions in vim	
+
+	  - A Vim calculator for visual selections
 
                                                      
 
