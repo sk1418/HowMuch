@@ -260,6 +260,7 @@ function! HowMuch#calc_in_py(expr)
 python << EOF
 import vim
 import math
+import re
 
 # only math module is allowed for evaluation
 ns = vars(math).copy()
@@ -267,13 +268,13 @@ ns['__builtins__'] = None
 expr = vim.eval("a:expr")
 scale = vim.eval("g:HowMuch_scale")
 try:
-    fmt = "{:." + str(scale) + "f}"
+    fmt    = "{:." + str(scale) + "f}"
     result = fmt.format(eval(expr,ns))
+    # if number in format ###.000, remove the trailing zeros
+    result = re.sub(r'(\d+)\.0*$', '\\1', result)
 except Exception as e:
-    print e
     result = "Err"
 
-print result
 vim.command("let result = string(%s)" % str(result))
 EOF
 
