@@ -23,7 +23,7 @@
 	- replace the selected expressions with result
 - Supports sum total result in line-(`v`) and block-wise (`Ctrl-v`)selection
 - User can create custom mapping to invoke `HowMuch`
-- *Evaluation "Engines"*
+- *Evaluation "Engines"* (The expression evaluator)
 	- `HowMuch` supports `GNU bc`, `python` and `native vim` expressions evaluation engines,
 	- User can choose which engine should be used to evaluate current visual section.
 	- User can define the order of the engines, and let `HowMuch` do evaluation automatically. E.g. if `bc` fails, try `vim` again.
@@ -32,13 +32,14 @@
 Examples and screencasts would be the best way to explain how does `HowMuch` does it job. For detailed usage explanation, please check the plugin documentation. The **USAGE*** section in the doc will cover:
 
 - what mapping gets what output
-- set `HowMuch` varialbes
+- set `HowMuch` variables
 - create custom `HowMuch` mappings
 
 screencasts TODO
 
-#Notice about Engines
-todo(vim, bc, python)
+#Variables, mapping customization and cautions
+Please read plugin documentation for details.
+
 
 
 
