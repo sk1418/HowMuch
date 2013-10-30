@@ -50,7 +50,6 @@ As long as there was an `Err`, the result of `sum` would be `Err`
 - block-wise selection (`Ctrl-V`)
 - Append result after each expression, separted with '=', 
 - default mapping: `<Leader>?=`
-![Demo1](https://raw.github.com/sk1418/HowMuch/master/demo/demo1.gif)
 
 ###Demo 2:
 - block-wise selection (`Ctrl-V`)
