@@ -63,6 +63,11 @@ function! HowMuch#to_float(expr)
 endfunction
 
 
+" if number in format ###.000, remove the trailing zeros
+function! HowMuch#removeTrailingZero(float)
+  return  substitute(a:float,'\.0*$', '', '')
+endfunction
+
 "============================
 " get visual selected text
 "============================
@@ -221,7 +226,6 @@ function! HowMuch#calc_in_vim(expr)
     call HowMuch#debug('Expression for vim', a:expr)
     let r = substitute(printf('%.'. g:HowMuch_scale . 'f', eval(a:expr)), '\.0*$', '', '') . ' '
     call HowMuch#debug('vim Result', r )
-    "remove precision if the number is ending with '.00000'
     return r
   catch /.*/
     throw HowMuch#errMsg('Invalid Vim Expression:'. a:expr .  ' Exception:' . v:exception)
@@ -242,7 +246,7 @@ function! HowMuch#calc_in_bc(expr)
   endif
   "removing the ending line break
   let r = substitute(r, '[\n\r]*$', '', '')
-  return r
+  return HowMuch#removeTrailingZero(r)
 endfunction
 
 "============================
@@ -270,7 +274,6 @@ try:
     fmt    = "{:." + str(scale) + "f}"
     result = fmt.format(eval(expr,ns))
     # if number in format ###.000, remove the trailing zeros
-    result = re.sub(r'(\d+)\.0*$', '\\1', result)
 except Exception as e:
     result = "Err"
 
@@ -282,7 +285,7 @@ EOF
   if result == 'Err'
       throw HowMuch#errMsg('Invalid python Expression ' . a:expr)
   endif
-  return result
+  return HowMuch#removeTrailingZero(result)
 endfunction
 
 " vim: ts=2:sw=2:tw=78:fdm=marker:expandtab
