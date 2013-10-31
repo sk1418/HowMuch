@@ -1,5 +1,7 @@
 *HowMuch.txt* A vim calculator for visual selections 
+*HowMuch* *howmuch*
 
+==============================================================================
 	    __  __              __  ___           __       ___ 
 	   / / / /___ _      __/  |/  /_  _______/ /_     /__ \
 	  / /_/ / __ \ | /| / / /|_/ / / / / ___/ __ \     / _/
@@ -8,22 +10,50 @@
 	
 	  - A Vim calculator for visual selections
 
+==============================================================================
 
 Author:  Kai Yuan (kent.yuan at gmail dot com)
 
-This plugin requires Vim 7.3 or later.
-
-
-==============================================================================
-Help on using HowMuch
-
-1. Introduction .......................... |HowMuch-intro| 
-2. Usage ................................. |HowMuch-usage| 
-3. Examples .............................. |HowMuch-examples|
+This plugin was written and tested under Vim 7.4.
 
 ==============================================================================
+CONTENTS                                                    *HowMuch-contents*
+
+    1. Intro ............................................. |HowMuch-intro| 
+    2. Features .......................................... |HowMuch-features| 
+    3. Engines ........................................... |HowMuch-engines| 
+    4. Options ........................................... |HowMuch-options| 
+    5. Mappings .......................................... |HowMuch-mapping| 
+    6. Examples .......................................... |HowMuch-examples|
+
+==============================================================================
+INTRO                                                          *HowMuch-intro*
+
+HowMuch calculates visual selected mathematical formulars, and writes
+the result into buffer. Supports different output format. 
+
+For more detailed information please check next section: |HowMuch-features|.
+
+==============================================================================
+FEATURES                                                    *HowMuch-features*
+
+    - Supports all visual selection modes (char-/line-/block-wise)
+    - Two output formats:
+      > append result with/out ` = ` after the expression
+      > replace the selected expressions with result
+
+    - sum result in line |V| and block-wise |CTRL-V| selection
+    - Mapping customization
+    - Supports three Evaluation "|engines|" (python, bc, vim)
+    - Supports evaluation with certain |engine| or |auto-calc|
+===============================================================================
+ENGINES                                       *engine* *engines* *HowMuch-engines*
+
+-------------------------------------------------------------------------------
+Auto-Calculation:~
+
+																				*autoCalc* *auto-calc* *HowMuch-auto-calc*
 
 
-
-
- vim: ft=help:ts=2:tw=78:shiftwidth=2:tabstop=2:fdm=marker:expandtab
+===============================================================================
+ vim:tw=78:ts=2:sw=2:ft=help:norl:
