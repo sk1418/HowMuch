@@ -3,6 +3,7 @@ if exists("g:loaded_HowMuch")
   "finish
 endif
 let g:loaded_HowMuch = 1
+"let g:HowMuch_debug=1
 
 "//////////////////////////////////////////////////////////////////////
 "                              Variables                              /
@@ -117,7 +118,7 @@ function! HowMuch#HowMuch(isAppend, withEq, sum, engineType) range
   endif
 
   let has_err      = 0
-  let total        = 0
+  let total        = 0.0
   "max_len is the length of longest line
   let max_len      = 0
   "first do validation
@@ -150,12 +151,14 @@ function! HowMuch#HowMuch(isAppend, withEq, sum, engineType) range
       let result  = g:HowMuch_engine_map[tolower(a:engineType)](e)
       let has_err = has_err>0? has_err : (result == 'Err'? 1:0)
       if !has_err && a:sum
-        let total += str2float(result)
+        call HowMuch#debug('before adding to total, result:', result)
+        call HowMuch#debug('result type:', type(result))
+        let total +=  str2float(result)
+        call HowMuch#debug('after adding total, total:', string(total))
       endif
     catch /.*/	
       let has_err +=1
       let result = 'Err'
-      call HowMuch#debug('result', result)
       "echoerr  v:exception
     finally  "at the end prepare output
       if a:isAppend
@@ -167,12 +170,16 @@ function! HowMuch#HowMuch(isAppend, withEq, sum, engineType) range
   endfor
 
   if a:sum
-    let total = has_err>0? 'Err':total
+    if has_err
+     unlet total
+     let total = 'Err' 
+    endif
+    "let total = has_err>0 ? 'Err': total
     call add(exps,repeat('-',max_len +2 ))
     if a:isAppend
-      call add(exps,'Sum' . repeat(' ', max_len-3). (a:withEq?' = ':' ' ) . string(total) )
+      call add(exps,'Sum' . repeat(' ', max_len-3). (a:withEq?' = ':' ' ) . (type(total)==type("") ? total : string(total)) )
     else
-      call add(exps,'Sum: ' .  string(total) )
+      call add(exps,'Sum: ' .  (type(total)==type("") ? total : string(total) ))
     endif
   endif
 

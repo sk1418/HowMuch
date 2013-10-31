@@ -5,10 +5,60 @@
 
 some other text some other text some other tex
 py only Expr : sin(45)+2**2/(35/5) some other 
-bc only Expr : 10^2+sqrt(3)+(10%3) some other 
+bc only Expr : 10^2+sqrt(3)        some other 
 vim only Expr: pow(2,3) - 508      some other 
 Expr for all : 1000*2-(500+500)    some other 
 some other text some other text some other tex
+
+
+"=============================================
+"Demo2
+"=============================================
+"- default mapping: <Leader>?r
+
+some other text some other text some other tex
+py only Expr : sin(45)+2**2/(35/5) some other 
+bc only Expr : 10^2+sqrt(3)        some other 
+vim only Expr: pow(2,3) - 508      some other 
+Expr for all : 1000*2-(500+500)    some other 
+some other text some other text some other tex
+
+"=============================================
+"Demo3
+"=============================================
+"- default mapping: <Leader>?s
+
+some other text some other text some other tex
+py only Expr : sin(45)+2**2/(35/5) some other 
+bc only Expr : 10^2+sqrt(3)        some other 
+vim only Expr: pow(2,3) @ERR@ 508  some other 
+Expr for all : 1000*2-(500+500)    some other 
+some other text some other text some other tex
+
+"=============================================
+"Demo4
+"=============================================
+"- default mapping: <Leader>?rs
+
+some other text some other text some other tex
+other column : 20  some other 
+other column : 40  some other 
+other column : 60  some other 
+other column : 30  some other 
+some other text some other text some other tex
+
+
+"=============================================
+"Demo5
+"=============================================
+"- default mapping: <Leader>?=s
+
+some other text some other text some other tex
+py only Expr : sin(45)+2**2/(35/5) some other 
+bc only Expr : 10^2+sqrt(3)        some other 
+vim only Expr: pow(2,3) - 508      some other 
+Expr for all : 1000*2-(500+500)    some other 
+some other text some other text some other texo
 
 
 " vim: ft=vim
