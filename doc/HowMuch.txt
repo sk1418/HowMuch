@@ -2,6 +2,7 @@
 *HowMuch* *howmuch*
 
 ==============================================================================
+>
 	    __  __              __  ___           __       ___ 
 	   / / / /___ _      __/  |/  /_  _______/ /_     /__ \
 	  / /_/ / __ \ | /| / / /|_/ / / / / ___/ __ \     / _/
@@ -48,11 +49,34 @@ FEATURES                                                    *HowMuch-features*
     - Supports evaluation with certain |engine| or |auto-calc|
 ===============================================================================
 ENGINES                                       *engine* *engines* *HowMuch-engines*
+Engines in HowMuch are expression evaluators. HowMuch supports three engines:
+|py-engine|, |bc-engine| and |vim-engine|. 
+
+																																	*vim-engine*
+with vim-engine, the selected expressions will be evaluated as vim expression. 
+
+																																	*bc-engine*
+bc-engine will evaluate expression as GNU bc expression. The expressions will
+be passed to "bc -l" to do calculation. Check bc man page for detailed
+information about `-l` option.
+
+If invalid bc expression was passed in, or system has no bc installed.  The
+engine will return "Err".
+
+Note  expressions like `foo` are valid bc expression. If we evaluate it with
+bc-engine, the result would be `0`
+
+																																	*py-engine*
+py-engine will evaluate expressions in python2. If system has no python2
+installed, "Err" will be returned. py-engine uses python's `eval()` to
+evaluate expressions. To avoid harmful expressions get evaluated, only
+the `math` module is in namespace.
 
 -------------------------------------------------------------------------------
 Auto-Calculation:~
 
 																				*autoCalc* *auto-calc* *HowMuch-auto-calc*
+
 
 
 ===============================================================================
