@@ -23,9 +23,11 @@ CONTENTS                                                    *HowMuch-contents*
     1. Intro ............................................. |HowMuch-intro| 
     2. Features .......................................... |HowMuch-features| 
     3. Engines ........................................... |HowMuch-engines| 
-    4. Options ........................................... |HowMuch-options| 
-    5. Mappings .......................................... |HowMuch-mapping| 
-    6. Examples .......................................... |HowMuch-examples|
+			3.1 Auto Calculation ............................... |HowMuch-auto-calc|
+		4. Configuration ..................................... |HowMuch-config|
+			4.1 Options ........................................ |HowMuch-options| 
+			4.2 Mappings ....................................... |HowMuch-mapping| 
+    5. Examples .......................................... |HowMuch-examples|
 
 ==============================================================================
 INTRO                                                          *HowMuch-intro*
@@ -76,8 +78,34 @@ the `math` module is in namespace.
 Auto-Calculation:~
 
 																				*autoCalc* *auto-calc* *HowMuch-auto-calc*
+HowMuch provides a feature called auto calculation. It will pick user defined
+(or default if user didn't specify ) engines in turn to evluate expressions.
+The global variable `g:HowMuch_auto_engines` (see |HowMuch-options|) defines
+the engines used by auto-calc and the order of the engines. Once an engine
+gives non-error result, HowMuch will use that result and stop further
+evaluation. If all engines gave `Err`, the result of evaluation would be `Err`
 
+This is useful for such cases that user selected multiple
+expressions but they are not all valid expressions for a single engine. For
+example: >
 
+	valid for all supported engines : 100+200                           
+	vim only expression             : pow(2.0, 2.0) + abs(-5) 
+	bc only expression              : s(45)
+	python only expression          : sin(45)                           
+<
+If we block-wise select the expressions press `<leader>?` (default mapping, check |HowMuch-mappings| for detail) and  use default `g:HowMuch_auto_engines` (['bc', 'vim', 'py']), and default scale (2) do an auto-calc, the output would be: >
+
+	valid for all supported engines : 100+200                 300
+	vim only expression             : pow(2.0, 2.0) + abs(-5) 9 
+	bc only expression              : s(45)                   .85
+	python only expression          : sin(45)                 0.85 
+<
+Note |auto-calc| is convenient, but one should use with caution. If same
+operator is valid in different engines but has different meanings, the result
+could be unexpected. For example, `3^2` in bc, means the square of of `3`, the
+result is `9`. But the same expression in python means `3 XOR 2`, the result is `1`. In python, the square expression would be `3**2`. If in the `g:HowMuch_auto_engines` py was defined before bc, 1 would be
+returned. 
 
 ===============================================================================
  vim:tw=78:ts=2:sw=2:ft=help:norl:
