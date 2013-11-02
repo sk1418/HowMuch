@@ -94,7 +94,10 @@ example: >
 	bc only expression              : s(45)
 	python only expression          : sin(45)                           
 <
-If we block-wise select the expressions press `<leader>?` (default mapping, check |HowMuch-mappings| for detail) and  use default `g:HowMuch_auto_engines` (['bc', 'vim', 'py']), and default scale (2) do an auto-calc, the output would be: >
+If we block-wise select the expressions press `<leader>?` (default mapping,
+		check |HowMuch-mappings| for detail) and  use default
+`g:HowMuch_auto_engines` (['bc', 'vim', 'py']), and default scale (2) do an
+auto-calc, the output would be: >
 
 	valid for all supported engines : 100+200                 300
 	vim only expression             : pow(2.0, 2.0) + abs(-5) 9 
@@ -104,8 +107,26 @@ If we block-wise select the expressions press `<leader>?` (default mapping, chec
 Note |auto-calc| is convenient, but one should use with caution. If same
 operator is valid in different engines but has different meanings, the result
 could be unexpected. For example, `3^2` in bc, means the square of of `3`, the
-result is `9`. But the same expression in python means `3 XOR 2`, the result is `1`. In python, the square expression would be `3**2`. If in the `g:HowMuch_auto_engines` py was defined before bc, 1 would be
-returned. 
+result is `9`. But the same expression in python means `3 XOR 2`, the result
+is `1`. In python, the square expression would be `3**2`. If in the
+`g:HowMuch_auto_engines` py was defined before bc, 1 would be returned. 
+
+===============================================================================
+CONFIGURATION																									 *HowMuch-config*
+
+HowMuch has pre-defined configuration as default. User could just install and
+use. If you want to do customization, please read this section. 
+
+-------------------------------------------------------------------------------
+OPTIONS																												*HowMuch-options*
+
+Options in HowMuch are global variables. Here is the available options:
+
+	|g:loaded_HowMuch|
+	|g:HowMuch_scale|
+	|g:HowMuch_auto_engines|
+	|g:HowMuch_engine_map|
+	|g:HowMuch_debug|
 
 ===============================================================================
  vim:tw=78:ts=2:sw=2:ft=help:norl:
