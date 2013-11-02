@@ -1,6 +1,5 @@
 " HowMuch : calculate visual selected math expressions
 " Author  : Kai Yuan <kent.yuan@gmail.com>
-" Version : 1.0.0
 " License: {{{
 "Copyright (c) 2013 Kai Yuan
 "Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -20,6 +19,11 @@
 "IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 "CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 " }}}
+
+"command to display version number:
+"
+let s:version ="1.0.0"
+command! HowMuchVersion echo "HowMuch Version: " . s:version
 
 "<Plug> mappings for auto engine
 "{{{

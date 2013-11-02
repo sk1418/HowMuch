@@ -22,12 +22,14 @@ CONTENTS                                                    *HowMuch-contents*
 
     1. Intro ............................................. |HowMuch-intro| 
     2. Features .......................................... |HowMuch-features| 
-    3. Engines ........................................... |HowMuch-engines| 
-			3.1 Auto Calculation ............................... |HowMuch-auto-calc|
-		4. Configuration ..................................... |HowMuch-config|
-			4.1 Options ........................................ |HowMuch-options| 
-			4.2 Mappings ....................................... |HowMuch-mapping| 
-    5. Examples .......................................... |HowMuch-examples|
+			2.1 Some examples .................................. |HowMuch-examples|
+		3. Configuration ..................................... |HowMuch-config|
+			3.1 Options ........................................ |HowMuch-options| 
+			3.2 Mappings ....................................... |HowMuch-mappings| 
+    4. Engines ........................................... |HowMuch-engines| 
+			4.1 Auto Calculation ............................... |HowMuch-auto-calc|
+			4.2 Add/modify engines ............................. |HowMuch-add-engine|
+    5. Change Log ........................................ |HowMuch-changelog|
 
 ==============================================================================
 INTRO                                                          *HowMuch-intro*
@@ -47,8 +49,65 @@ FEATURES                                                    *HowMuch-features*
 
     - sum result in line |V| and block-wise |CTRL-V| selection
     - Mapping customization
-    - Supports three Evaluation "|engines|" (python, bc, vim)
-    - Supports evaluation with certain |engine| or |auto-calc|
+    - Supports evaluation with explicit |engine| or |auto-calc|
+    - Supports three evaluation "|engines|" (python, bc, vim)
+		- You can still add your own engines or modify current engine
+
+-------------------------------------------------------------------------------
+Some examples~
+  																														*HowMuch-examples*
+
+===============================================================================
+CONFIGURATION																									 *HowMuch-config*
+
+HowMuch has pre-defined configuration as default. User could just install and
+use. If you want to do customization, please read this section. 
+
+-------------------------------------------------------------------------------
+OPTIONS																												*HowMuch-options*
+
+	|g:loaded_HowMuch| .................. if load HowMuch plugin
+	|g:HowMuch_scale| ................... set scale of float result
+	|g:HowMuch_auto_engines| ............ engine list for |auto-calc|
+	|g:HowMuch_debug| ................... if turn on debug mode
+	|g:HowMuch_engine_map| .............. (advanced option) availabe engines map 
+
+
+-------------------------------------------------------------------------------
+Detailed descriptions~
+
+																															*g:loaded_HowMuch*
+Use this option to disable HowMuch plugin: >
+	let g:loaded_HowMuch = 1
+<
+																															*g:HowMuch_scale*
+Use this option to define the precision of float calculations default value is
+`2` : >
+	let g:HowMuch_scale = 2
+<
+																												*g:HowMuch_auto_engines*
+This option defines which engines would be used for |auto-calc|, also defines
+the order of engines to be applied. See |auto-calc| too. The value of this
+option is |List| default value is: >
+	let g:HowMuch_auto_engines = ['bc', 'vim', 'py']
+<
+ 																															*g:HowMuch_debug*
+Use this option to show more debug message. Debug information by default is
+disabled. >
+	let g:HowMuch_debug = 0
+>
+  																												*g:HowMuch_engine_map*
+The value of this option is a vim |Dictionary|. The key is an engine name. The
+value is a function to do expression evaluation. Usually this option should
+not be changed. However the modification possibility was provided, because you
+may want to write your own "engine". Then you need change this option. See
+|HowMuch-add-engine|
+
+===============================================================================
+MAPPINGS                                       **HowMuch-mappings*
+
+
+
 ===============================================================================
 ENGINES                                       *engine* *engines* *HowMuch-engines*
 Engines in HowMuch are expression evaluators. HowMuch supports three engines:
@@ -76,11 +135,10 @@ the `math` module is in namespace.
 
 -------------------------------------------------------------------------------
 Auto-Calculation:~
-
 																				*autoCalc* *auto-calc* *HowMuch-auto-calc*
 HowMuch provides a feature called auto calculation. It will pick user defined
 (or default if user didn't specify ) engines in turn to evluate expressions.
-The global variable `g:HowMuch_auto_engines` (see |HowMuch-options|) defines
+The global variable `g:HowMuch_auto_engines` (see |HowMuch_auto_engines|) defines
 the engines used by auto-calc and the order of the engines. Once an engine
 gives non-error result, HowMuch will use that result and stop further
 evaluation. If all engines gave `Err`, the result of evaluation would be `Err`
@@ -104,29 +162,16 @@ auto-calc, the output would be: >
 	bc only expression              : s(45)                   .85
 	python only expression          : sin(45)                 0.85 
 <
-Note |auto-calc| is convenient, but one should use with caution. If same
+Note |auto-calc| is convenient, but you should use with caution. If same
 operator is valid in different engines but has different meanings, the result
 could be unexpected. For example, `3^2` in bc, means the square of of `3`, the
 result is `9`. But the same expression in python means `3 XOR 2`, the result
 is `1`. In python, the square expression would be `3**2`. If in the
 `g:HowMuch_auto_engines` py was defined before bc, 1 would be returned. 
 
-===============================================================================
-CONFIGURATION																									 *HowMuch-config*
-
-HowMuch has pre-defined configuration as default. User could just install and
-use. If you want to do customization, please read this section. 
-
 -------------------------------------------------------------------------------
-OPTIONS																												*HowMuch-options*
-
-Options in HowMuch are global variables. Here is the available options:
-
-	|g:loaded_HowMuch|
-	|g:HowMuch_scale|
-	|g:HowMuch_auto_engines|
-	|g:HowMuch_engine_map|
-	|g:HowMuch_debug|
+Add/modify engines~
+															*add-engines* *modify-engine* *HowMuch-add-engine*
 
 ===============================================================================
- vim:tw=78:ts=2:sw=2:ft=help:norl:
+ vim:tw=78:ts=2:sw=2:sts=2:ft=help:norl:
