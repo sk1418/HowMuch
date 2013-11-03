@@ -104,9 +104,156 @@ may want to write your own "engine". Then you need change this option. See
 |HowMuch-add-engine|
 
 ===============================================================================
-MAPPINGS                                       **HowMuch-mappings*
+MAPPINGS                                       *HowMuch-mappings*
 
+All mappings in HowMuch are visual-mode mappings. HowMuch has defined default
+mappings for common usage:
 
+----------------------------------------
+Auto-Calculation mappings~
+																														*auto-calc-mappings*
+>
+  ======================================================================================
+  |                             Auto calculation mappings                              |
+  ======================================================================================
+  | Default      |          Features       |      To Remap                             |
+  ======================================================================================
+  |              | auto-calculation;       |                                           |
+  |  <Leader>?   | append result           | vmap ... <Plug>AutoCalcAppend             |
+  |              | separator: " "          |                                           |
+  +--------------+-------------------------+-------------------------------------------+
+  |              | auto-calculation;       |                                           |
+  |  <Leader>?s  | append result           | vmap ... <Plug>AutoCalcAppendWithSum      |
+  |              | separator: " "          |                                           |
+  |              | do sum                  |                                           |
+  +--------------+-------------------------+-------------------------------------------+
+  |              | auto-calculation;       |                                           |
+  |  <Leader>?=  | append result           | vmap ... <Plug>AutoCalcAppendWithEq       |
+  |              | separator: " = "        |                                           |
+  +--------------+-------------------------+-------------------------------------------+
+  |              | auto-calculation;       |                                           |
+  |  <Leader>?=s | append result           | vmap ... <Plug>AutoCalcAppendWithEqAndSum |
+  |              | separator: " = "        |                                           |
+  |              | do sum                  |                                           |
+  +--------------+-------------------------+-------------------------------------------+
+  |              | auto-calculation        |                                           |
+  |  <Leader>?r  | replace expr with result| vmap ... <Plug>AutoCalcReplace            |
+  |              |                         |                                           |
+  +--------------+-------------------------+-------------------------------------------+
+  |              | auto-calculation        |                                           |
+  |  <Leader>?rs | replace expr with result| vmap ... <Plug>AutoCalcReplaceWithSum     |
+  |              | do sum                  |                                           |
+  ======================================================================================
+<
+
+----------------------------------------
+Vim engine mappings~
+																														*vim-engine-mappings*
+>
+  ======================================================================================
+  |                                vim engine mappings                                 |
+  ======================================================================================
+  | Default      |          Features       |      To Remap                             |
+	======================================================================================
+  |              | calculate with vim      |                                           |
+  | <Leader>v?   | append result           | vmap ... <Plug>VimCalcAppend              |
+  |              | separator: " "          |                                           |
+  +--------------+-------------------------+-------------------------------------------+
+  |              | calculate with vim      |                                           |
+  | <Leader>v?s  | append result           | vmap ... <Plug>VimCalcAppendWithSum       |
+  |              | separator: " "          |                                           |
+  |              | do sum                  |                                           |
+  +--------------+-------------------------+-------------------------------------------+
+  |              | calculate with vim      |                                           |
+  | <Leader>v?=  | append result           | vmap ... <Plug>VimCalcAppendWithEq        |
+  |              | separator: " = "        |                                           |
+  +--------------+-------------------------+-------------------------------------------+
+  |              | calculate with vim      |                                           |
+  | <Leader>v?=s | append result           | vmap ... <Plug>VimCalcAppendWithEqAndSum  |
+  |              | separator: " = "        |                                           |
+  |              | do sum                  |                                           |
+  +--------------+-------------------------+-------------------------------------------+
+  |              | calculate with vim      |                                           |
+  | <Leader>v?r  | replace expr with result| vmap ... <Plug>VimCalcReplace             |
+  |              |                         |                                           |
+  +--------------+-------------------------+-------------------------------------------+
+  |              | calculate with vim      |                                           |
+  | <Leader>v?rs | replace expr with result| vmap ... <Plug>VimCalcReplaceWithSum       |
+  |              | do sum                  |                                           |
+  ======================================================================================
+<
+----------------------------------------
+Gnu bc engine mappings~
+																														*bc-engine-mappings*
+>
+  ======================================================================================
+  |                               Gnu bc engine mappings                               |
+  ======================================================================================
+  | Default      |          Features       |      To Remap                             |
+	======================================================================================
+  |              | calculate with bc       |                                           |
+  | <Leader>b?   | append result           | vmap ... <Plug>BcCalcAppend               |
+  |              | separator: " "          |                                           |
+  +--------------+-------------------------+-------------------------------------------+
+  |              | calculate with bc       |                                           |
+  | <Leader>b?s  | append result           | vmap ... <Plug>BcCalcAppendWithSum        |
+  |              | separator: " "          |                                           |
+  |              | do sum                  |                                           |
+  +--------------+-------------------------+-------------------------------------------+
+  |              | calculate with bc       |                                           |
+  | <Leader>b?=  | append result           | vmap ... <Plug>BcCalcAppendWithEq         |
+  |              | separator: " = "        |                                           |
+  +--------------+-------------------------+-------------------------------------------+
+  |              | calculate with bc       |                                           |
+  | <Leader>b?=s | append result           | vmap ... <Plug>BcCalcAppendWithEqAndSum   |
+  |              | separator: " = "        |                                           |
+  |              | do sum                  |                                           |
+  +--------------+-------------------------+-------------------------------------------+
+  |              | calculate with bc       |                                           |
+  | <Leader>b?r  | replace expr with result| vmap ... <Plug>BcCalcReplace              |
+  |              |                         |                                           |
+  +--------------+-------------------------+-------------------------------------------+
+  |              | calculate with bc       |                                           |
+  | <Leader>b?rs | replace expr with result| vmap ... <Plug>BcCalcReplaceWithSum       |
+  |              | do sum                  |                                           |
+  ======================================================================================
+<
+----------------------------------------
+Python engine mappings~
+																														*python-engine-mappings*
+>
+  ======================================================================================
+  |                               python engine mappings                               |
+  ======================================================================================
+  | Default      |          Features       |      To Remap                             |
+	======================================================================================
+  |              | calculate with python   |                                           |
+  | <Leader>p?   | append result           | vmap ... <Plug>PyCalcAppend               |
+  |              | separator: " "          |                                           |
+  +--------------+-------------------------+-------------------------------------------+
+  |              | calculate with python   |                                           |
+  | <Leader>p?s  | append result           | vmap ... <Plug>PyCalcAppendWithSum        |
+  |              | separator: " "          |                                           |
+  |              | do sum                  |                                           |
+  +--------------+-------------------------+-------------------------------------------+
+  |              | calculate with python   |                                           |
+  | <Leader>p?=  | append result           | vmap ... <Plug>PyCalcAppendWithEq         |
+  |              | separator: " = "        |                                           |
+  +--------------+-------------------------+-------------------------------------------+
+  |              | calculate with python   |                                           |
+  | <Leader>p?=s | append result           | vmap ... <Plug>PyCalcAppendWithEqAndSum   |
+  |              | separator: " = "        |                                           |
+  |              | do sum                  |                                           |
+  +--------------+-------------------------+-------------------------------------------+
+  |              | calculate with python   |                                           |
+  | <Leader>p?r  | replace expr with result| vmap ... <Plug>PyCalcReplace              |
+  |              |                         |                                           |
+  +--------------+-------------------------+-------------------------------------------+
+  |              | calculate with python   |                                           |
+  | <Leader>p?rs | replace expr with result| vmap ... <Plug>PyCalcReplaceWithSum       |
+  |              | do sum                  |                                           |
+  ======================================================================================
+<
 
 ===============================================================================
 ENGINES                                       *engine* *engines* *HowMuch-engines*
