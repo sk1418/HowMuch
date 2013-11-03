@@ -26,6 +26,7 @@ CONTENTS                                                    *HowMuch-contents*
 		3. Configuration ..................................... |HowMuch-config|
 			3.1 Options ........................................ |HowMuch-options| 
 			3.2 Mappings ....................................... |HowMuch-mappings| 
+			3.3 Command ........................................ |HowMuch-command| 
     4. Engines ........................................... |HowMuch-engines| 
 			4.1 Auto Calculation ............................... |HowMuch-auto-calc|
 			4.2 Add/modify engines ............................. |HowMuch-add-engine|
@@ -64,9 +65,16 @@ HowMuch has pre-defined configuration as default. User could just install and
 use. If you want to do customization, please read this section. 
 
 -------------------------------------------------------------------------------
+COMMAND																												*HowMuch-command*
+
+HowMuch has only one command: to display current plugin version. 
+>
+	:HowMuchVersion
+>
+-------------------------------------------------------------------------------
 OPTIONS																												*HowMuch-options*
 
-	|g:loaded_HowMuch| .................. if load HowMuch plugin
+	|g:loaded_HowMuch| .................. disable HowMuch plugin
 	|g:HowMuch_scale| ................... set scale of float result
 	|g:HowMuch_auto_engines| ............ engine list for |auto-calc|
 	|g:HowMuch_debug| ................... if turn on debug mode
@@ -95,7 +103,7 @@ option is |List| default value is: >
 Use this option to show more debug message. Debug information by default is
 disabled. >
 	let g:HowMuch_debug = 0
->
+<
   																												*g:HowMuch_engine_map*
 The value of this option is a vim |Dictionary|. The key is an engine name. The
 value is a function to do expression evaluation. Usually this option should
@@ -104,10 +112,11 @@ may want to write your own "engine". Then you need change this option. See
 |HowMuch-add-engine|
 
 ===============================================================================
-MAPPINGS                                       *HowMuch-mappings*
+MAPPINGS									                                    *HowMuch-mappings*
 
 All mappings in HowMuch are visual-mode mappings. HowMuch has defined default
-mappings for common usage:
+mappings for common usage. Check the following tables for the default mappings
+of different feature sets also the customization commands.
 
 ----------------------------------------
 Auto-Calculation mappings~
@@ -319,6 +328,12 @@ is `1`. In python, the square expression would be `3**2`. If in the
 -------------------------------------------------------------------------------
 Add/modify engines~
 															*add-engines* *modify-engine* *HowMuch-add-engine*
+
+==============================================================================
+CHANGELOG																								 *HowMuch-changelog*
+
+2013-11-03 Version 1.0.0~
+- first release
 
 ===============================================================================
  vim:tw=78:ts=2:sw=2:sts=2:ft=help:norl:
