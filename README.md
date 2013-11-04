@@ -21,16 +21,17 @@
 	- append result with/out `=` after the expression 
 	- replace the selected expressions with result
 - Supports sum total result in line-(`V`) and block-wise (`Ctrl-V`)selection
-- User can create custom mapping to invoke `HowMuch`
+- You can create custom mapping to invoke `HowMuch`
 - *Evaluation "Engines"* (The expression evaluator)
 	- `HowMuch` supports `GNU bc`, `python` and `native vim` expressions evaluation engines,
-	- User can choose which engine should be used to evaluate current visual section.
-	- User can define the order of the engines, and let `HowMuch` do evaluation automatically. E.g. if `bc` fails, try `vim` again.
+	- You can choose which engine should be used to evaluate current visual section.
+	- You can define the order of the engines, and let `HowMuch` do evaluation automatically. E.g. if `bc` fails, try `vim` again.
+	- You can add your own engines or modify the built-in engines. read documentation for details.
 
-**!Please read plugin documentation for variables, mapping and cautions details**
+**!Please read plugin documentation (HowMuch-config section) for options, mappings**
 
 ##Examples & Screencasts
-Examples and screencasts would be the best way to explain how does `HowMuch` does it job. In the demo section, only Auto-Calc will be demoed. The calculation can be done by certain engine. E.g 
+Examples and screencasts would be the best way to explain how does `HowMuch` does its job. In the demo section, only Auto-Calc will be demoed. The calculation can be done by certain engine. E.g 
 
 - `<leader>b?` for `bc`
 - `<leader>v?` for `vim`
