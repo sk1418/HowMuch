@@ -44,6 +44,7 @@ For more detailed information please check next section: |HowMuch-features|.
 FEATURES                                                    *HowMuch-features*
 
     - Supports all visual selection modes (char-/line-/block-wise)
+		- auto remove trailing spaces and equal signs.
     - Two output formats:
       > append result with/out ` = ` after the expression
       > replace the selected expressions with result
@@ -295,9 +296,15 @@ Auto-Calculation:~
 HowMuch provides a feature called auto calculation. It will pick user defined
 (or default if user didn't specify ) engines in turn to evluate expressions.
 The global variable `g:HowMuch_auto_engines` (see |HowMuch_auto_engines|) defines
-the engines used by auto-calc and the order of the engines. Once an engine
-gives non-error result, HowMuch will use that result and stop further
-evaluation. If all engines gave `Err`, the result of evaluation would be `Err`
+the engines used by auto-calc and the order of the engines. For example: >
+
+	let g:HowMuch_auto_engines r= ['bc', 'vim', 'py']  "this is default
+	let g:HowMuch_auto_engines r= ['bc','vim'] " without using py for auto-calc
+	let g:HowMuch_auto_engines r= ['py','bc']  "use engines py and bc in turn
+<
+Once an engine gives non-error result, HowMuch will use that result and stop
+further evaluation. If all engines gave `Err`, the result of evaluation would
+be `Err`
 
 This is useful for such cases that user selected multiple
 expressions but they are not all valid expressions for a single engine. For
@@ -317,6 +324,8 @@ auto-calc, the output would be: >
 	vim only expression             : pow(2.0, 2.0) + abs(-5) 9 
 	bc only expression              : s(45)                   .85
 	python only expression          : sin(45)                 0.85 
+
+
 <
 Note |auto-calc| is convenient, but you should use with caution. If same
 operator is valid in different engines but has different meanings, the result
@@ -328,6 +337,43 @@ is `1`. In python, the square expression would be `3**2`. If in the
 -------------------------------------------------------------------------------
 Add/modify engines~
 															*add-engines* *modify-engine* *HowMuch-add-engine*
+
+Usually the three built-in engines should be enough for common editing.
+However if you have special requirement, you could add your own engine, or
+modify the existing ones. This section describe how to do that.
+
+First write a vim function, the function should have one argument, which is
+the passed in expression. Trailing spaces or trailing equal signs were already
+removed. You don't have to check for that. The vim file should be sourced. 
+something like: >
+
+	function! Calc_in_myEngine(expr)
+		" here to do the calculation	
+		" if you need handle the scale, you need read the variable g:HowMuch_scale
+		" return the result in string type.
+	endfunction
+<
+
+Then to make |HowMuch| use your function as new engine, you need to add the
+function in `g:HowMuch_engine_map`, E.g: >
+
+	let g:HowMuch_engine_map['myOwn'] = function('Calc_in_myEngine')
+<
+
+Also if you want |HowMuch-auto-calc| use your engine too, the
+`g:HowMuch_auto_engines` need to be set too. E.g, the following example will
+let |HowMuch-auto-calc| first pick your own engine to do calculation. >
+
+	let g:HowMuch_auto_engines : ['myOwn','bc', 'vim', 'py']
+<
+
+Till now, if you press auto-calc short-cuts. HowMuch will start calculation
+from your own engine.
+
+If you want to create mapping to only use your engine to do calculation. You
+may want to check the comment of the function: `HowMuch#HowMuch` in code, so
+that you can control all options, like: replace or append? with/out equal
+sign? do sum or not? and so on.
 
 ==============================================================================
 CHANGELOG																								 *HowMuch-changelog*
