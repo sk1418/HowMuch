@@ -18,8 +18,9 @@ let g:HowMuch_engine_map = exists('g:HowMuch_engine_map')? g:HowMuch_engine_map 
             \ 'vim':function('HowMuch#calc_in_vim') }
 
 "//////////////////////////////////////////////////////////////////////
-"                         Helper  functions                         {{{
+"                         Helper  functions                         
 "//////////////////////////////////////////////////////////////////////
+"{{{
 
 "============================
 " print debug information

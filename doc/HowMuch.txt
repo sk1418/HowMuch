@@ -62,7 +62,17 @@ Some examples~
 The examples in this section are based on default configuration. See
 |HowMuch-config| for details.
 
-Example 1 : auto-calc and replace 
+Example 1 : auto-calc and replace (char-wise selection)
+>
+	The project would cost (2*30+3*27.50+4*(3+20+10.75)) dollars.
+<
+
+with above line, cursor at the first 2, press `vi(<Leader>?r` we get:
+>
+	The project would cost (277.50) dollars.
+<
+
+Example 2 : auto-calc and replace (block-wise selection)
 >
 	some other text some other text some other tex
 	py only Expr : sin(45)+2**2/(35/5) some other 
@@ -83,7 +93,7 @@ visual select the expressions, and press <Leader>?r then we get:
 	some other text some other text some other tex
 	
 <
-Example 2 : auto-calc, replace and sum
+Example 3 : auto-calc, replace and sum
 >
 	col1 10.1	
 	col1 20.1	
@@ -101,7 +111,7 @@ visual select column #2, then press <Leader>?rs then we get:
        --
        Sum: 100.4
 <
-Example 3 : auto-calc, append with `=` and do sum
+Example 4 : auto-calc, append with `=` and do sum
 
 >
 	3**2
@@ -119,7 +129,7 @@ select expressions and press <Leader>?=s we get:
 	Sum   = 29.33
 <
 
-Example 4 (If there was any `Err`, sum will be `Err` )
+Example 5 (If there was any `Err`, sum will be `Err` )
 >
 	1 + 1
 	1  @ whatever 
