@@ -247,7 +247,7 @@ function! HowMuch#calc_in_bc(expr)
   let r = system(printf('echo "scale=%d;%s"|bc -l &2>/dev/null', g:HowMuch_scale, a:expr))
   if v:shell_error>0
     throw HowMuch#errMsg('bc program return error: '. v:shell_error)
-  elseif match(r, 'error')>0 || r == ''
+  elseif match(r, '[^0-9\n .]')>=0 || r == ''
     throw HowMuch#errMsg('Invalid bc Expression')
   endif
   "removing the ending line break
