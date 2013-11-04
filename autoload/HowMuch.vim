@@ -1,6 +1,5 @@
 if exists("g:loaded_HowMuch") 
-"FIXME skip finish only for testing and development
-  "finish
+  finish
 endif
 let g:loaded_HowMuch = 1
 "let g:HowMuch_debug=1

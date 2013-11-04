@@ -11,7 +11,6 @@
 
                                                      
 
-##!HowMuch is still under development!
 ##Introduction
 `HowMuch` is a Vim plugin to calculate visual selected mathematical formulars (vim or bc expressions). It will add the result(or replace the selected expressions) in the current edit text. For details check next section: Features 
 
