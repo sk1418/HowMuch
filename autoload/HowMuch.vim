@@ -20,10 +20,10 @@
 "CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 " }}}
 
-if exists("g:loaded_HowMuch") 
+if exists("g:autoloaded_HowMuch") 
   finish
 endif
-let g:loaded_HowMuch = 1
+let g:autoloaded_HowMuch = 1
 "let g:HowMuch_debug=1
 
 "//////////////////////////////////////////////////////////////////////

@@ -22,6 +22,11 @@
 
 "command to display version number:
 "
+if exists("g:loaded_HowMuch") 
+  finish
+endif
+let g:loaded_HowMuch = 1
+
 let s:version ="1.0.0"
 command! HowMuchVersion echo "HowMuch Version: " . s:version
 
