@@ -61,21 +61,21 @@ As long as there was an `Err`, the result of `sum` would be `Err`
 ####Demo 2:
 - block-wise selection (`Ctrl-V`)
 - replace selected expressions with result
-- default mapping: <Leader>?r
+- default mapping: `<Leader>?r`
 ![demo2](https://raw.github.com/sk1418/sharedResources/master/HowMuch/demo2.gif)
 
 ####Demo 3:
 - block-wise selection (`Ctrl-V`)
 - append result after each expressions (with **Err**)
 - do sum (with **Err**)
-- default mapping: <Leader>?s
+- default mapping: `<Leader>?s`
 ![demo3](https://raw.github.com/sk1418/sharedResources/master/HowMuch/demo3.gif)
 
 ####Demo 4:
 - block-wise selection (`Ctrl-V`)
 - replace selected expressions with result
 - do sum 
-- default mapping: <Leader>?rs
+- default mapping: `<Leader>?rs`
 ![demo4](https://raw.github.com/sk1418/sharedResources/master/HowMuch/demo4.gif)
 
 ####Demo 5:
