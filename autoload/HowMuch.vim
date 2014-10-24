@@ -105,6 +105,22 @@ function! HowMuch#get_visual_text()
 endfunction 
 
 
+"============================
+" parse command arguments
+"============================
+function! HowMuch#DoWithCommand(argStr)
+  let str = substitute(a:argStr,'\s','', 'g')
+  let hasReplace = match(str,'r')>=0? 1:0
+  let hasEq =  match(str,'=')>=0? 1:0
+  let hasSum =  match(str,'s')>=0? 1:0
+
+  if hasEq && hasReplace
+    echoerr HowMuch#errMsg('illegal option combination: "r" and "="')
+    return
+  endif
+  call HowMuch#HowMuch(!hasReplace, hasEq, hasSum, 'auto')
+endfunction
+
 "///////////////////////////////////////////////////////////////////}}}
 
 

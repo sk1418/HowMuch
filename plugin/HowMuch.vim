@@ -27,8 +27,11 @@ if exists("g:loaded_HowMuch")
 endif
 let g:loaded_HowMuch = 1
 
-let s:version ="1.0.0"
+let s:version ="1.0.1"
+"command to check version
 command! HowMuchVersion echo "HowMuch Version: " . s:version
+":HowMuch command
+command! -range -nargs=* HowMuch call HowMuch#DoWithCommand(<q-args>)
 
 "<Plug> mappings for auto engine
 "{{{
