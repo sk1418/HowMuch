@@ -153,7 +153,7 @@ use. If you want to do customization, please read this section.
 -------------------------------------------------------------------------------
 COMMAND																												*HowMuch-command*
 
-HowMuch has two command: 
+HowMuch has two commands: 
 
 :HowMuchVersion to display current plugin version. 
 :HowMuch [flags] To do math calculation                       *:HowMuch*
@@ -165,6 +165,7 @@ availabe flags:
 
 Note:
 - `HowMuch` command must be executed when expressions were actived selected
+- `HowMuch` command only work for |autoCalc| mode.
 
 >
 -------------------------------------------------------------------------------
@@ -391,7 +392,7 @@ Auto-Calculation:~
 																				*autoCalc* *auto-calc* *HowMuch-auto-calc*
 HowMuch provides a feature called auto calculation. It will pick user defined
 (or default if user didn't specify ) engines in turn to evluate expressions.
-The global variable `g:HowMuch_auto_engines` (see |HowMuch_auto_engines|) defines
+The global variable `g:HowMuch_auto_engines` (see |g:HowMuch_auto_engines|) defines
 the engines used by auto-calc and the order of the engines. For example: >
 
 	let g:HowMuch_auto_engines r= ['bc', 'vim', 'py']  "this is default

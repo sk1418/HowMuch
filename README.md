@@ -33,7 +33,7 @@
 **!Please read plugin documentation (HowMuch-config section) for options, mappings**
 
 ##Command
-`HowMuch` can be invoked by command as well. There is a `:HowMuch [flags]` command. We can first visual select the expressions, then for example do `:HowMuch s=` to append result with ` = ` sign to the end of selection, also add a sum at the bottom of selection. Read `:h :HowMuch` for the available flags.
+`HowMuch` can be invoked by command as well. There is a `:HowMuch [flags]` command. We can first visual select the expressions, then for example do `:HowMuch s=` to append result with ` = ` sign to the end of selection, also add a sum at the bottom of selection. **:HowMuch command only work for 'autoCalc' mode**  Read `:h :HowMuch` for the available flags.
 
 ##Examples & Screencasts
 Examples and screencasts would be the best way to explain how does `HowMuch` does its job. In the demo section, only Auto-Calc will be demoed. The calculation can be done by certain engine. E.g 
