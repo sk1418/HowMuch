@@ -36,41 +36,41 @@ command! -range -nargs=* HowMuch call HowMuch#DoWithCommand(<q-args>)
 "<Plug> mappings for auto engine
 "{{{
 vnoremap <silent><unique> <Plug>AutoCalcReplace            :call HowMuch#HowMuch(0,0,0,'auto')<cr>
-vnoremap <silent><unique> <Plug>AutoCalcReplaceWithSum     :call HowMuch#HowMuch(0,0,1,'auto')<cr>
+vnoremap <silent><unique> <Plug>AutoCalcWithSumReplace     :call HowMuch#HowMuch(0,0,1,'auto')<cr>
 vnoremap <silent><unique> <Plug>AutoCalcAppend             :call HowMuch#HowMuch(1,0,0,'auto')<cr>
-vnoremap <silent><unique> <Plug>AutoCalcAppendWithEq       :call HowMuch#HowMuch(1,1,0,'auto')<cr>
-vnoremap <silent><unique> <Plug>AutoCalcAppendWithSum      :call HowMuch#HowMuch(1,0,1,'auto')<cr>
-vnoremap <silent><unique> <Plug>AutoCalcAppendWithEqAndSum :call HowMuch#HowMuch(1,1,1,'auto')<cr>
+vnoremap <silent><unique> <Plug>AutoCalcWithEqAppend       :call HowMuch#HowMuch(1,1,0,'auto')<cr>
+vnoremap <silent><unique> <Plug>AutoCalcWithSumAppend      :call HowMuch#HowMuch(1,0,1,'auto')<cr>
+vnoremap <silent><unique> <Plug>AutoCalcWithEqAndSumAppend :call HowMuch#HowMuch(1,1,1,'auto')<cr>
 "}}}
 
 "<Plug> mappings for bc engine
 "{{{
 vnoremap <silent><unique> <Plug>BcCalcReplace              :call HowMuch#HowMuch(0,0,0,'bc')<cr>
-vnoremap <silent><unique> <Plug>BcCalcReplaceWithSum       :call HowMuch#HowMuch(0,0,1,'bc')<cr>
+vnoremap <silent><unique> <Plug>BcCalcWithSumReplace       :call HowMuch#HowMuch(0,0,1,'bc')<cr>
 vnoremap <silent><unique> <Plug>BcCalcAppend               :call HowMuch#HowMuch(1,0,0,'bc')<cr>
-vnoremap <silent><unique> <Plug>BcCalcAppendWithEq         :call HowMuch#HowMuch(1,1,0,'bc')<cr>
-vnoremap <silent><unique> <Plug>BcCalcAppendWithSum        :call HowMuch#HowMuch(1,0,1,'bc')<cr>
-vnoremap <silent><unique> <Plug>BcCalcAppendWithEqAndSum   :call HowMuch#HowMuch(1,1,1,'bc')<cr>
+vnoremap <silent><unique> <Plug>BcCalcWithEqAppend         :call HowMuch#HowMuch(1,1,0,'bc')<cr>
+vnoremap <silent><unique> <Plug>BcCalcWithSumAppend        :call HowMuch#HowMuch(1,0,1,'bc')<cr>
+vnoremap <silent><unique> <Plug>BcCalcWithEqAndSumAppend   :call HowMuch#HowMuch(1,1,1,'bc')<cr>
 "}}}
 
 "<Plug> mappings for vim engine
 "{{{
 vnoremap <silent><unique> <Plug>VimCalcReplace             :call HowMuch#HowMuch(0,0,0,'vim')<cr>
-vnoremap <silent><unique> <Plug>VimCalcReplaceWithSum      :call HowMuch#HowMuch(0,0,1,'vim')<cr>
+vnoremap <silent><unique> <Plug>VimCalcWithSumReplace      :call HowMuch#HowMuch(0,0,1,'vim')<cr>
 vnoremap <silent><unique> <Plug>VimCalcAppend              :call HowMuch#HowMuch(1,0,0,'vim')<cr>
-vnoremap <silent><unique> <Plug>VimCalcAppendWithEq        :call HowMuch#HowMuch(1,1,0,'vim')<cr>
-vnoremap <silent><unique> <Plug>VimCalcAppendWithSum       :call HowMuch#HowMuch(1,0,1,'vim')<cr>
-vnoremap <silent><unique> <Plug>VimCalcAppendWithEqAndSum  :call HowMuch#HowMuch(1,1,1,'vim')<cr>
+vnoremap <silent><unique> <Plug>VimCalcWithEqAppend        :call HowMuch#HowMuch(1,1,0,'vim')<cr>
+vnoremap <silent><unique> <Plug>VimCalcWithSumAppend       :call HowMuch#HowMuch(1,0,1,'vim')<cr>
+vnoremap <silent><unique> <Plug>VimCalcWithEqAndSumAppend  :call HowMuch#HowMuch(1,1,1,'vim')<cr>
 "}}}
 
 "<Plug> mappings for python engine
 "{{{
 vnoremap <silent><unique> <Plug>PyCalcReplace              :call HowMuch#HowMuch(0,0,0,'py')<cr>
-vnoremap <silent><unique> <Plug>PyCalcReplaceWithSum       :call HowMuch#HowMuch(0,0,1,'py')<cr>
+vnoremap <silent><unique> <Plug>PyCalcWithSumReplace       :call HowMuch#HowMuch(0,0,1,'py')<cr>
 vnoremap <silent><unique> <Plug>PyCalcAppend               :call HowMuch#HowMuch(1,0,0,'py')<cr>
-vnoremap <silent><unique> <Plug>PyCalcAppendWithEq         :call HowMuch#HowMuch(1,1,0,'py')<cr>
-vnoremap <silent><unique> <Plug>PyCalcAppendWithSum        :call HowMuch#HowMuch(1,0,1,'py')<cr>
-vnoremap <silent><unique> <Plug>PyCalcAppendWithEqAndSum   :call HowMuch#HowMuch(1,1,1,'py')<cr>
+vnoremap <silent><unique> <Plug>PyCalcWithEqAppend         :call HowMuch#HowMuch(1,1,0,'py')<cr>
+vnoremap <silent><unique> <Plug>PyCalcWithSumAppend        :call HowMuch#HowMuch(1,0,1,'py')<cr>
+vnoremap <silent><unique> <Plug>PyCalcWithEqAndSumAppend   :call HowMuch#HowMuch(1,1,1,'py')<cr>
 "}}}
 
 "===========================================================
@@ -80,23 +80,23 @@ vnoremap <silent><unique> <Plug>PyCalcAppendWithEqAndSum   :call HowMuch#HowMuch
 if !hasmapto('<Plug>AutoCalcReplace','v')
   vmap <leader>?r <Plug>AutoCalcReplace
 endif
-if !hasmapto('<Plug>AutoCalcReplaceWithSum','v')
-  vmap <leader>?rs <Plug>AutoCalcReplaceWithSum
+if !hasmapto('<Plug>AutoCalcWithSumReplace','v')
+  vmap <leader>?sr <Plug>AutoCalcWithSumReplace
 endif
 if !hasmapto('<Plug>AutoCalcAppend','v')
-  vmap <leader>? <Plug>AutoCalcAppend
+  vmap <leader>?a <Plug>AutoCalcAppend
 endif
 
-if !hasmapto('<Plug>AutoCalcAppendWithEq','v')
-  vmap  <leader>?= <Plug>AutoCalcAppendWithEq
+if !hasmapto('<Plug>AutoCalcWithEqAppend','v')
+  vmap  <leader>?=a <Plug>AutoCalcWithEqAppend
 endif
 
-if !hasmapto('<Plug>AutoCalcAppendWithSum','v')
-  vmap  <leader>?s <Plug>AutoCalcAppendWithSum
+if !hasmapto('<Plug>AutoCalcWithSumAppend','v')
+  vmap  <leader>?sa <Plug>AutoCalcWithSumAppend
 endif
 
-if !hasmapto('<Plug>AutoCalcAppendWithEqAndSum','v')
-  vmap  <leader>?=s <Plug>AutoCalcAppendWithEqAndSum
+if !hasmapto('<Plug>AutoCalcWithEqAndSumAppend','v')
+  vmap  <leader>?=sa <Plug>AutoCalcWithEqAndSumAppend
 endif"}}}
 
 "default mappings for bc
@@ -105,24 +105,24 @@ if !hasmapto('<Plug>BcCalcReplace','v')
   vmap  <leader>b?r <Plug>BcCalcReplace
 endif
 
-if !hasmapto('<Plug>BcCalcReplaceWithSum','v')
-  vmap  <leader>b?rs <Plug>BcCalcReplaceWithSum
+if !hasmapto('<Plug>BcCalcWithSumReplace','v')
+  vmap  <leader>b?sr <Plug>BcCalcWithSumReplace
 endif
 
 if !hasmapto('<Plug>BcCalcAppend','v')
-  vmap  <leader>b? <Plug>BcCalcAppend
+  vmap  <leader>b?a <Plug>BcCalcAppend
 endif
 
-if !hasmapto('<Plug>BcCalcAppendWithEq','v')
-  vmap  <leader>b?= <Plug>BcCalcAppendWithEq
+if !hasmapto('<Plug>BcCalcWithEqAppend','v')
+  vmap  <leader>b?=a <Plug>BcCalcWithEqAppend
 endif
 
-if !hasmapto('<Plug>BcCalcAppendWithSum','v')
-  vmap  <leader>b?s <Plug>BcCalcAppendWithSum
+if !hasmapto('<Plug>BcCalcWithSumAppend','v')
+  vmap  <leader>b?sa <Plug>BcCalcWithSumAppend
 endif
 
-if !hasmapto('<Plug>BcCalcAppendWithEqAndSum','v')
-  vmap  <leader>b?=s <Plug>BcCalcAppendWithEqAndSum
+if !hasmapto('<Plug>BcCalcWithEqAndSumAppend','v')
+  vmap  <leader>b?=sa <Plug>BcCalcWithEqAndSumAppend
 endif"}}}
 
 "default mappings for vim
@@ -131,24 +131,24 @@ if !hasmapto('<Plug>VimCalcReplace','v')
   vmap  <leader>v?r <Plug>VimCalcReplace
 endif
 
-if !hasmapto('<Plug>VimCalcReplaceWithSum','v')
-  vmap  <leader>v?rs <Plug>VimCalcReplaceWithSum
+if !hasmapto('<Plug>VimCalcWithSumReplace','v')
+  vmap  <leader>v?sr <Plug>VimCalcWithSumReplace
 endif
 
 if !hasmapto('<Plug>VimCalcAppend','v')
-  vmap  <leader>v? <Plug>VimCalcAppend
+  vmap  <leader>v?a <Plug>VimCalcAppend
 endif
 
-if !hasmapto('<Plug>VimCalcAppendWithEq','v')
-  vmap  <leader>v?= <Plug>VimCalcAppendWithEq
+if !hasmapto('<Plug>VimCalcWithEqAppend','v')
+  vmap  <leader>v?=a <Plug>VimCalcWithEqAppend
 endif
 
-if !hasmapto('<Plug>VimCalcAppendWithSum','v')
-  vmap  <leader>v?s <Plug>VimCalcAppendWithSum
+if !hasmapto('<Plug>VimCalcWithSumAppend','v')
+  vmap  <leader>v?sa <Plug>VimCalcWithSumAppend
 endif
 
-if !hasmapto('<Plug>VimCalcAppendWithEqAndSum','v')
-  vmap  <leader>v?=s <Plug>VimCalcAppendWithEqAndSum
+if !hasmapto('<Plug>VimCalcWithEqAndSumAppend','v')
+  vmap  <leader>v?=sa <Plug>VimCalcWithEqAndSumAppend
 endif
 
 "}}}
@@ -159,24 +159,24 @@ if !hasmapto('<Plug>PyCalcReplace','v')
   vmap  <leader>p?r <Plug>PyCalcReplace
 endif
 
-if !hasmapto('<Plug>PyCalcReplaceWithSum','v')
-  vmap  <leader>p?rs <Plug>PyCalcReplaceWithSum
+if !hasmapto('<Plug>PyCalcWithSumReplace','v')
+  vmap  <leader>p?sr <Plug>PyCalcWithSumReplace
 endif
 
 if !hasmapto('<Plug>PyCalcAppend','v')
-  vmap  <leader>p? <Plug>PyCalcAppend
+  vmap  <leader>p?a <Plug>PyCalcAppend
 endif
 
-if !hasmapto('<Plug>PyCalcAppendWithEq','v')
-  vmap  <leader>p?= <Plug>PyCalcAppendWithEq
+if !hasmapto('<Plug>PyCalcWithEqAppend','v')
+  vmap  <leader>p?=a <Plug>PyCalcWithEqAppend
 endif
 
-if !hasmapto('<Plug>PyCalcAppendWithSum','v')
-  vmap  <leader>p?s <Plug>PyCalcAppendWithSum
+if !hasmapto('<Plug>PyCalcWithSumAppend','v')
+  vmap  <leader>p?sa <Plug>PyCalcWithSumAppend
 endif
 
-if !hasmapto('<Plug>PyCalcAppendWithEqAndSum','v')
-  vmap  <leader>p?=s <Plug>PyCalcAppendWithEqAndSum
+if !hasmapto('<Plug>PyCalcWithEqAndSumAppend','v')
+  vmap  <leader>p?=sa <Plug>PyCalcWithEqAndSumAppend
 endif
 "}}}
 
