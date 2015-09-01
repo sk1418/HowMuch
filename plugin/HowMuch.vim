@@ -27,7 +27,7 @@ if exists("g:loaded_HowMuch")
 endif
 let g:loaded_HowMuch = 1
 
-let s:version ="1.0.1"
+let s:version ="1.0.2"
 "command to check version
 command! HowMuchVersion echo "HowMuch Version: " . s:version
 ":HowMuch command
@@ -78,10 +78,10 @@ vnoremap <silent><unique> <Plug>PyCalcAppendWithEqAndSum   :call HowMuch#HowMuch
 "default mappings for auto
 "{{{
 if !hasmapto('<Plug>AutoCalcReplace','v')
-  vmap <leader>?r <Plug>AutoCalcReplace
+  vmap <leader><leader>? <Plug>AutoCalcReplace
 endif
 if !hasmapto('<Plug>AutoCalcReplaceWithSum','v')
-  vmap <leader>?rs <Plug>AutoCalcReplaceWithSum
+  vmap <leader><leader>?s <Plug>AutoCalcReplaceWithSum
 endif
 if !hasmapto('<Plug>AutoCalcAppend','v')
   vmap <leader>? <Plug>AutoCalcAppend
@@ -102,11 +102,11 @@ endif"}}}
 "default mappings for bc
 "{{{
 if !hasmapto('<Plug>BcCalcReplace','v')
-  vmap  <leader>b?r <Plug>BcCalcReplace
+  vmap  <leader><leader>b? <Plug>BcCalcReplace
 endif
 
 if !hasmapto('<Plug>BcCalcReplaceWithSum','v')
-  vmap  <leader>b?rs <Plug>BcCalcReplaceWithSum
+  vmap  <leader><leader>b?s <Plug>BcCalcReplaceWithSum
 endif
 
 if !hasmapto('<Plug>BcCalcAppend','v')
@@ -128,11 +128,11 @@ endif"}}}
 "default mappings for vim
 "{{{
 if !hasmapto('<Plug>VimCalcReplace','v')
-  vmap  <leader>v?r <Plug>VimCalcReplace
+  vmap  <leader><leader>v? <Plug>VimCalcReplace
 endif
 
 if !hasmapto('<Plug>VimCalcReplaceWithSum','v')
-  vmap  <leader>v?rs <Plug>VimCalcReplaceWithSum
+  vmap  <leader><leader>v?s <Plug>VimCalcReplaceWithSum
 endif
 
 if !hasmapto('<Plug>VimCalcAppend','v')
@@ -156,11 +156,11 @@ endif
 "default mappings for python
   "{{{
 if !hasmapto('<Plug>PyCalcReplace','v')
-  vmap  <leader>p?r <Plug>PyCalcReplace
+  vmap  <leader><leader>p? <Plug>PyCalcReplace
 endif
 
 if !hasmapto('<Plug>PyCalcReplaceWithSum','v')
-  vmap  <leader>p?rs <Plug>PyCalcReplaceWithSum
+  vmap  <leader><leader>p?s <Plug>PyCalcReplaceWithSum
 endif
 
 if !hasmapto('<Plug>PyCalcAppend','v')

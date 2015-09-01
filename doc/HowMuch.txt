@@ -222,33 +222,35 @@ Auto-Calculation mappings~
   ======================================================================================
   |                             Auto calculation mappings                              |
   ======================================================================================
-  | Default      |          Features       |      To Remap                             |
+  | Default             |     Features     |      To Remap                             |
   ======================================================================================
-  |              | auto-calculation;       |                                           |
-  |  <Leader>?   | append result           | vmap ... <Plug>AutoCalcAppend             |
-  |              | separator: " "          |                                           |
-  +--------------+-------------------------+-------------------------------------------+
-  |              | auto-calculation;       |                                           |
-  |  <Leader>?s  | append result           | vmap ... <Plug>AutoCalcAppendWithSum      |
-  |              | separator: " "          |                                           |
-  |              | do sum                  |                                           |
-  +--------------+-------------------------+-------------------------------------------+
-  |              | auto-calculation;       |                                           |
-  |  <Leader>?=  | append result           | vmap ... <Plug>AutoCalcAppendWithEq       |
-  |              | separator: " = "        |                                           |
-  +--------------+-------------------------+-------------------------------------------+
-  |              | auto-calculation;       |                                           |
-  |  <Leader>?=s | append result           | vmap ... <Plug>AutoCalcAppendWithEqAndSum |
-  |              | separator: " = "        |                                           |
-  |              | do sum                  |                                           |
-  +--------------+-------------------------+-------------------------------------------+
-  |              | auto-calculation        |                                           |
-  |  <Leader>?r  | replace expr with result| vmap ... <Plug>AutoCalcReplace            |
-  |              |                         |                                           |
-  +--------------+-------------------------+-------------------------------------------+
-  |              | auto-calculation        |                                           |
-  |  <Leader>?rs | replace expr with result| vmap ... <Plug>AutoCalcReplaceWithSum     |
-  |              | do sum                  |                                           |
+  |                     | auto-calculation;|                                           |
+  |  <Leader>?          | append result    | vmap ... <Plug>AutoCalcAppend             |
+  |                     | separator: " "   |                                           |
+  +---------------------+------------------+-------------------------------------------+
+  |                     | auto-calculation;|                                           |
+  |  <Leader>?s         | append result    | vmap ... <Plug>AutoCalcAppendWithSum      |
+  |                     | separator: " "   |                                           |
+  |                     | do sum           |                                           |
+  +---------------------+------------------+-------------------------------------------+
+  |                     | auto-calculation;|                                           |
+  |  <Leader>?=         | append result    | vmap ... <Plug>AutoCalcAppendWithEq       |
+  |                     | separator: " = " |                                           |
+  +---------------------+------------------+-------------------------------------------+
+  |                     | auto-calculation;|                                           |
+  |  <Leader>?=s        | append result    | vmap ... <Plug>AutoCalcAppendWithEqAndSum |
+  |                     | separator: " = " |                                           |
+  |                     | do sum           |                                           |
+  +---------------------+------------------+-------------------------------------------+
+  |                     | auto-calculation |                                           |
+  |  <Leader><Leader>?  | replace expr     |                                           |
+	|                     | with result      | vmap ... <Plug>AutoCalcReplace            |
+  |                     |                  |                                           |
+  +---------------------+------------------+-------------------------------------------+
+  |                     | auto-calculation |                                           |
+  |  <Leader><leader>?s | replace expr     | vmap ... <Plug>AutoCalcReplaceWithSum     |
+  |                     | with result      |                                           |
+  |                     | do sum           |                                           |
   ======================================================================================
 <
 
