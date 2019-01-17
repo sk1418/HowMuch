@@ -22,7 +22,7 @@
 
 "command to display version number:
 "
-if exists("g:loaded_HowMuch") 
+if exists("g:loaded_HowMuch")
   finish
 endif
 let g:loaded_HowMuch = 1

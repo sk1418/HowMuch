@@ -1,15 +1,15 @@
 **HowMuch** README file
-	
 
-	    __  __              __  ___           __       ___ 
+
+	    __  __              __  ___           __       ___
 	   / / / /___ _      __/  |/  /_  _______/ /_     /__ \
 	  / /_/ / __ \ | /| / / /|_/ / / / / ___/ __ \     / _/
-	 / __  / /_/ / |/ |/ / /  / / /_/ / /__/ / / /    /_/  
-	/_/ /_/\____/|__/|__/_/  /_/\__,_/\___/_/ /_/    (_) 
+	 / __  / /_/ / |/ |/ / /  / / /_/ / /__/ / / /    /_/
+	/_/ /_/\____/|__/|__/_/  /_/\__,_/\___/_/ /_/    (_)
 
 	  - A Vim calculator for visual selections
 
-                                                     
+
 
 (http://www.vim.org/scripts/script.php?script_id=4761)
 
@@ -28,13 +28,13 @@
         - [Demo 5:](#demo-5)
 
 ## Introduction
-`HowMuch` is a Vim plugin to calculate visual selected mathematical formulars (vim or bc expressions). It will add the result(or replace the selected expressions) in the current edit text. For details check next section: Features 
+`HowMuch` is a Vim plugin to calculate visual selected mathematical formulas (vim or bc expressions). It will add the result(or replace the selected expressions) in the current edit text. For details check next section: Features
 
 ## Features
 
 - Supports all visual selection modes (char-/line-/block-wise)
-- Supports two output formats: 
-	- append result with/out `=` after the expression 
+- Supports two output formats:
+	- append result with/out `=` after the expression
 	- replace the selected expressions with result
 - Supports sum total result in line-(`V`) and block-wise (`Ctrl-V`)selection
 - You can create custom mapping to invoke `HowMuch`
@@ -50,7 +50,7 @@
 `HowMuch` can be invoked by command as well. There is a `:HowMuch [flags]` command. We can first visual select the expressions, then for example do `:HowMuch s=` to append result with ` = ` sign to the end of selection, also add a sum at the bottom of selection. **:HowMuch command only work for 'autoCalc' mode**  Read `:h :HowMuch` for the available flags.
 
 ## Examples & Screencasts
-Examples and screencasts would be the best way to explain how does `HowMuch` does its job. In the demo section, only Auto-Calc will be demoed. The calculation can be done by certain engine. E.g 
+Examples and screencasts would be the best way to explain how does `HowMuch` does its job. In the demo section, only Auto-Calc will be demoed. The calculation can be done by certain engine. E.g
 
 - `<leader>b?` for `bc`
 - `<leader>v?` for `vim`
@@ -61,19 +61,19 @@ Details please check plugin documentation.
 All demos were made with following settings.
 
 	"The scale of the result:
-	let g:HowMuch_scale = 2 
+	let g:HowMuch_scale = 2
 	"the engine order for auto-calculation
 	let g:HowMuch_auto_engines = ['bc', 'vim', 'py']
 
 
 ### Auto-Calc Demo
-Auto-calc will evaluate each expression with each engine in turn, taking order from `g:HowMuch_auto_engines`, till a result without error comes out. If all engines give `Err`. E.g an expression like `##+foo`, result is `Err`. 
+Auto-calc will evaluate each expression with each engine in turn, taking order from `g:HowMuch_auto_engines`, till a result without error comes out. If all engines give `Err`. E.g an expression like `##+foo`, result is `Err`.
 
 As long as there was an `Err`, the result of `sum` would be `Err`
 
 #### Demo 1:
 - block-wise selection (`Ctrl-V`)
-- Append result after each expression, separated with '=', 
+- Append result after each expression, separated with '=',
 - default mapping: `<Leader>?=`
 ![demo1](https://raw.github.com/sk1418/sharedResources/master/HowMuch/demo1.gif)
 
@@ -93,13 +93,13 @@ As long as there was an `Err`, the result of `sum` would be `Err`
 #### Demo 4:
 - block-wise selection (`Ctrl-V`)
 - replace selected expressions with result
-- do sum 
+- do sum
 - default mapping: `<Leader><Leader>?s`
 ![demo4](https://raw.github.com/sk1418/sharedResources/master/HowMuch/demo4.gif)
 
 #### Demo 5:
 - block-wise selection (`Ctrl-V`)
-- Append result after each expression, separated with '=', 
+- Append result after each expression, separated with '=',
 - do sum
 - default mapping: `<Leader>?=s`
 ![demo5](https://raw.github.com/sk1418/sharedResources/master/HowMuch/demo5.gif)
