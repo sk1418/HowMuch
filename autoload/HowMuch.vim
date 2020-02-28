@@ -299,17 +299,22 @@ endfunction
 "
 "============================ 
 function! HowMuch#calc_in_py(expr)
-  if !has('python')
-    echoerr HowMuch#errMsg('vim was not compiled with +python!')
+  "echom fnamemodify(resolve(expand('<sfile>:p')), ':h')
+  let py2 = 'python'
+  let py3 = 'python3'
+  if !(has(py3) + has(py2))
+    echoerr HowMuch#errMsg('vim must be compiled with +python3 or python !')
     return 'Err'
   endif
   call HowMuch#debug('Expression for python', a:expr)
   let result = ''
-python << EOF
+  let py_cmd = has(py3) ? py3 : py2
+  exec py_cmd." << EOF"
+
 import vim
 import math
 import re
-
+vim.command("call HowMuch#debug('in python', 'foo')")
 # only math module is allowed for evaluation
 ns = vars(math).copy()
 ns['__builtins__'] = None
