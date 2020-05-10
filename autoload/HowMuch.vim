@@ -77,6 +77,12 @@ endfunction
 
 
 "============================
+" get string from a number/float with the scale
+"============================
+function! HowMuch#float_to_str(expr)
+  return  substitute(printf("%." . g:HowMuch_scale . "f", a:expr), '\.0*$', '','')
+endfunction
+"============================
 " change the numbers into float, 
 " useful for vim engine to get the
 " right scale
@@ -215,9 +221,9 @@ function! HowMuch#HowMuch(isAppend, withEq, sum, engineType) range
     "let total = has_err>0 ? 'Err': total
     call add(exps,repeat('-',max_len +2 ))
     if a:isAppend
-      call add(exps,'Sum' . repeat(' ', max_len-3). (a:withEq?' = ':' ' ) . (type(total)==type("") ? total : string(total)) )
+      call add(exps,'Sum' . repeat(' ', max_len-3). (a:withEq?' = ':' ' ) . (type(total)==type("") ? total : HowMuch#float_to_str(total)) )
     else
-      call add(exps,'Sum: ' .  (type(total)==type("") ? total : string(total) ))
+      call add(exps,'Sum: ' .  (type(total)==type("") ? total : HowMuch#float_to_str(total) ))
     endif
   endif
 
@@ -269,7 +275,7 @@ endfunction
 function! HowMuch#calc_in_vim(expr)
   try
     call HowMuch#debug('Expression for vim', a:expr)
-    let r = substitute(printf('%.'. g:HowMuch_scale . 'f', eval(a:expr)), '\.0*$', '', '') . ' '
+    let r = HowMuch#float_to_str(eval(a:expr)) . ' '
     call HowMuch#debug('vim Result', r )
     return r
   catch /.*/
@@ -339,3 +345,5 @@ EOF
 endfunction
 
 " vim: ts=2:sw=2:tw=78:fdm=marker:expandtab
+
+

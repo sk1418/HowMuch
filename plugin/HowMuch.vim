@@ -27,7 +27,7 @@ if exists("g:loaded_HowMuch")
 endif
 let g:loaded_HowMuch = 1
 
-let s:version ="1.0.2"
+let s:version ="1.0.3"
 "command to check version
 command! HowMuchVersion echo "HowMuch Version: " . s:version
 ":HowMuch command
