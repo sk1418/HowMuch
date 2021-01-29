@@ -328,14 +328,12 @@ expr = vim.eval("a:expr")
 scale = vim.eval("g:HowMuch_scale")
 try:
     fmt    = "{:." + str(scale) + "f}"
-    result = fmt.format(eval(expr,ns))
-    # if number in format ###.000, remove the trailing zeros
+    result = fmt.format(eval(expr,ns)).rstrip('0').rstrip('.')
 except Exception as e:
     result = "Err"
 
-vim.command("let result = string(%s)" % str(result))
+vim.command("let result = '%s'" % str(result))
 EOF
-
     
   call HowMuch#debug('Result from python', result)
   if result == 'Err'
