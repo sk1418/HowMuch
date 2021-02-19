@@ -74,6 +74,10 @@ vnoremap <silent><unique> <Plug>PyCalcAppendWithEqAndSum   :call HowMuch#HowMuch
 "}}}
 
 "===========================================================
+"optionally skip default mappings
+if exists('g:HowMuch_no_mappings') && g:HowMuch_no_mappings
+  finish
+endif
 
 "default mappings for auto
 "{{{
